@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>URC HQ 1 CROPS - Canteen Facilities</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes"> <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    
+    <meta name="apple-mobile-web-app-title" content="URC Canteen">
+    
+    <link rel="apple-touch-icon" href="YOUR_CUSTOM_ICON_LINK_HERE.png">
+    
+    <style>
+        /* कंटेंट कॉपी होने से रोकने के लिए (Never copy content) */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: #f4f4f9;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* 5 सेकंड का पीला प्रीलोडर (Yellow Preloader) */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #FFEB3B;
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+
+        /* प्रीलोडर का चित्र - ऊपर से ज़ूम होता हुआ आएगा */
+        .preloader-logo {
+            width: 200px;
+            height: 90px;
+            pointer-events: none;
+            /* ड्रॉप और ज़ूम एनीमेशन */
+            animation: dropAndZoom 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
+        }
+
+        @keyframes dropAndZoom {
+            0% { 
+                transform: translateY(-100vh) scale(0.2); 
+                opacity: 0; 
+            }
+            60% { 
+                transform: translateY(20px) scale(1.2); 
+                opacity: 1; 
+            }
+            100% { 
+                transform: translateY(0) scale(1); 
+                opacity: 1; 
+            }
+        }
+
+        /* टॉप हेडर सेटिंग्स */
+        .header-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .mitra-icon {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            margin: 0 auto;
+            display: block;
+            pointer-events: none;
+        }
+
+        .header-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin: 10px 0 5px 0;
+            color: #2c3e50;
+        }
+
+        .header-subtitle {
+            font-size: 14px;
+            margin: 0;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* टेबल डिज़ाइन (Mobile Friendly) */
+        .table-container {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #1a5276;
+            color: white;
+        }
+
+        /* इमेज सुरक्षा और डिज़ाइन */
+        .img-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+        }
+
+        .img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            pointer-events: none;
+        }
+
+        .img-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 10;
+        }
+
+        /* निर्देश (Instructions) डिज़ाइन */
+        .instructions-section {
+            margin-top: 25px;
+            padding: 15px;
+            background: #eef2f5;
+            border-left: 5px solid #cb4335;
+            border-radius: 4px;
+        }
+
+        .instructions-section h3 {
+            margin-top: 0;
+            font-size: 16px;
+            color: #cb4335;
+            text-align: left;
+        }
+
+        .instructions-section ul {
+            text-align: left;
+            padding-left: 20px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* पॉप-अप (Modal) डिज़ाइन */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0; top: 0;
+            width: 100%; height: 100%; 
+            background-color: rgba(0,0,0,0.85); 
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content-wrapper {
+            position: relative;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .modal-content-wrapper img {
+            max-width: 100%;
+            max-height: 60vh;
+            display: block;
+            border-radius: 5px;
+            pointer-events: none;
+        }
+        
+        .modal-content-wrapper::after {
+             content: '';
+             position: absolute;
+             top: 0; left: 0; right: 0; bottom: 0;
+             z-index: 10;
+        }
+
+        .close {
+            position: absolute;
+            top: -12px; right: -12px;
+            color: white;
+            background: #e74c3c;
+            border-radius: 50%;
+            width: 28px; height: 28px;
+            text-align: center;
+            line-height: 28px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body oncopy="return false" oncut="return false" onpaste="return false">
+
+    <div id="preloader">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTv81faWYq0op6iOt8tG8DQRLqn5D_wzU46SetD1GL1djprUReqRXfkQntuBknegX7Ashvn6yor_vOBdBdFFJQjXLG5j0P9-iNNa5_andy6QOWKQDpkRykGe4HJJI4W0usWURSp_Qu7fhOhTf4_sG5eQmvuMSOhXYO5VSMf24vpts08VrYF2wxGfdiywt0/s1747/A2251884-D132-4355-9AF9-C5B701E7C445.png" alt="Loading..." class="preloader-logo">
+    </div>
+
+    <div class="header-section">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" alt="Mitra Icon" class="mitra-icon">
+        <div class="header-title">OFFICER CANTEEN FACILITIES</div>
+        <div class="header-subtitle">URC HQ 1 CROPS</div>
+
+        <p style="text-align: left;"> सभी कमीशन्ड अधिकारियों को कैंटीन में उपलब्ध सभी ग्रोसरी और शराब पर 80% की विशेष छूट प्रदान की जाती है।
+        JCO, NCO एवं अग्निवीर के लिए पूर्व निर्धारित दरें एवं छूट यथावत लागू रहेंगी। </p>
+        <br/>
+
+        <strong><p style="text-align: left;">SPECIAL DISCOUNT THIS PRODUCTS</p></strong>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Products</th>
+                    <th>Item Name</th>
+                    <th>Amount (₹)</th>
+                </tr>
+            </thead>
+            <tbody id="canteenTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="instructions-section">
+        <h3>भारतीय सेना कैंटीन निर्देश (Canteen Instructions)</h3>
+        <ul>
+            <li>कैंटीन में प्रवेश केवल वैध स्मार्ट कार्ड धारकों के लिए ही मान्य है।</li>
+            <li>आश्रितों (Dependents) को अपना डिपेंडेंट कार्ड साथ लाना अनिवार्य है।</li>
+            <li>कृपया कैंटीन परिसर में अनुशासन और कतार (Queue) बनाए रखें।</li>
+            <li>निर्धारित कोटा के अनुसार ही सामान प्रदान किया जाएगा।</li>
+            <li>कैंटीन का समय: सुबह 09:00 बजे से दोपहर 13:30 बजे तक।</li>
+            <li>दोपहर का समय: 15:30 बजे से शाम 18:00 बजे तक।</li>
+            <li>कैंटीन हर सप्ताह मंगलवार (Tuesday) को पूर्णतया बंद रहेगी।</li>
+            <li>सामान की अदला-बदली केवल बिलिंग की तारीख से 3 दिन के भीतर होगी।</li>
+        </ul>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <div class="modal-content-wrapper">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImg" src="" alt="Popup Image">
+        </div>
+    </div>
+
+    <script>
+        // राइट क्लिक और शॉर्टकट डिसेबल
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && (e.key === 'c' || e.key === 's' || e.key === 'u' || e.key === 'p')) {
+                e.preventDefault();
+            }
+        });
+
+        // 5 सेकंड का प्रीलोडर टाइमर
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500); 
+            }, 5000); // 5000 मिलीसेकंड = 5 सेकंड
+        });
+
+        // 18 चीजों की लिस्ट
+        const items = [
+            { id: 1, name: "Amul Gold Full Cream 500 ml", price: "23", img: "https://www.bbassets.com/media/uploads/p/l/40090893_8-amul-amul-gold.jpg" },
+            { id: 2, name: "Rasoi ka Raja Wheat Atta 10 kg", price: "180", img: "https://dukaan.b-cdn.net/1000x1000/webp/141851/7c81b3a4-639f-4104-a289-3827d5e1fecc.png" },
+            { id: 3, name: "Aashirvaad Shudh Chakki Atta 10 kg", price: "210", img: "https://www.bbassets.com/media/uploads/p/l/40127505_9-aashirvaad-shudh-chakki-atta.jpg" },
+            { id: 4, name: "Fortune Refined Oil 5 ltr", price: "480", img: "https://m.media-amazon.com/images/I/71LXjYmTsoL.jpg" },
+            { id: 5, name: "Surf Excel Detergent Powder - 5 Kg", price: "500", img: "https://m.media-amazon.com/images/I/61s5orKgmwL._AC_UF1000,1000_QL80_.jpg" },
+            { id: 6, name: "Amul Taaza Toned Milk 500 ml", price: "22", img: "https://cdn.grofers.com/da/cms-assets/cms/product/52173fba-2d70-40f9-adae-eb4e22696b4f.jpg" },
+            { id: 7, name: "Amul Masti Curd 390 g", price: "28", img: "https://cdn.grofers.com/da/cms-assets/cms/product/2107cdc3-8d54-41fb-a7ee-89d8573b9f06.jpg" },
+            { id: 8, name: "Amul Pure Ghee 1 ltr", price: "480", img: "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_600/NI_CATALOG/IMAGES/CIW/2024/3/23/4103cb54-85db-4c57-853b-181eb2cf3baa_ghee_4952HKRHGW_MN.png" },
+            { id: 9, name: "Paras Desi Ghee 1 ltr", price: "360", img: "https://m.media-amazon.com/images/I/814jlv806WL.jpg" },
+            { id: 10, name: "TATA Salt 1 kg", price: "17", img: "https://upload.wikimedia.org/wikipedia/en/7/79/Tata_salt_packet_photo.webp" },
+            { id: 11, name: "Fortune Sugur 5 kg", price: "165", img: "https://m.media-amazon.com/images/I/81zVrBm4jSL.jpg" },
+            { id: 12, name: "Taj Mahal Tea 1 kg", price: "190", img: "https://aapkabazar.co/_next/image?url=https%3A%2F%2Fimage.aapkabazar.co%2Fproduct%2F3239%2F1698385390663.png%3Ftype%3Dwebp%26width%3D600&w=3840&q=75" },
+            { id: 13, name: "Nescafe Classic Pure Coffee Powder 200 g", price: "450", img: "https://images.jdmagicbox.com/quickquotes/images_main/mtc0oda2mti5oq-1748061299-ft1xekc7.jpg" },
+            { id: 14, name: "English Oven White Bread 700 g", price: "35", img: "https://www.bbassets.com/media/uploads/p/l/251037_14-coca-cola-soft-drink-original-taste.jpg" },
+            { id: 15, name: "Amul Salted Butter 100 g", price: "30", img: "https://nagabazaar.com/cdn/shop/files/Amul-Pasteurised-Butter-100-g.jpg?v=1747519848&width=1024" },
+            { id: 16, name: "Amul Fresh Paneer", price: "40", img: "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/da/cms-assets/cms/product/7a1700ee-dd38-49cf-b34e-171ff84ac0e7.png?bg_token=color.background.quaternary" },
+            { id: 17, name: "Fortune Kachi Ghani Mustard Oil 1 l", price: "90", img: "https://www.bbassets.com/media/uploads/p/xl/276764_12-fortune-fortune-premium-kachi-ghani-pure-mustard-oil.jpg" },
+            { id: 18, name: "MARLBORO FILTER BLACK", price: "70", img: "https://royalpuff.in/wp-content/uploads/2025/04/MARLBORO-FILTER-BLACK-1.jpg" },
+            { id: 19, name: "Marlboro Advance Compact", price: "30", img: "https://royalpuff.in/wp-content/uploads/2025/03/MARLBORO-COMPACT.jpg" },
+            { id: 20, name: "Gold Flake Small (10 Pieces)", price: "60", img: "https://www.topintownstore.com/wp-content/uploads/2024/11/gold-flake-small.webp" },
+            { id: 21, name: "Gold Flake Kings (10 Pieces)", price: "150", img: "https://www.topintownstore.com/wp-content/uploads/img_9413-1536x1536.jpeg" },
+            { id: 22, name: "Classic Ice Burst (10 Pieces)", price: "110", img: "https://www.topintownstore.com/wp-content/uploads/img_1178-981x1536.jpeg" },
+            { id: 23, name: "Wills Classic Mild (10 Pieces)", price: "150", img: "https://www.topintownstore.com/wp-content/uploads/2024/11/wills-classic-mild-10-sticks.webp" },
+            { id: 24, name: "Capstain (10 Pieces)", price: "50", img: "https://img.thecdn.in/475012/SKU-0028_0-1760352598052.jpg?width=600&format=webp" },
+            { id: 25, name: "Total Pack of 10 Sticks", price: "40", img: "https://cdn.dotpe.in/longtail/store-items/8498388/D3BL8wr4.webp" },
+            { id: 26, name: "Cavanders Gold Leaf (10 Pieces)", price: "30", img: "https://tpackss.globaltobaccocontrol.org/sites/default/files/styles/500x500/public/pack_images/IND_DEL_H2_001_8.JPG?itok=tqYPc5nX" },
+            { id: 27, name: "More India W1 10 Sticks", price: "60", img: "https://smokekart.in/cdn/shop/files/more-international-cigarettes.jpg?v=1758166783" },
+            { id: 28, name: "8 Pm Special Rare 750 ml", price: "210", img: "https://static.livcheers.com/static/content/images/liquor/LCIN02310.webp" },
+            { id: 29, name: "Bagpiper Classic 750 ml", price: "190", img: "https://static.livcheers.com/static/content/images/liquor/LCIN02320.webp" },
+            { id: 30, name: "Mcdowell No1 Platinum 750 ml", price: "195", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01402.webp" },
+            { id: 31, name: "Imperial Blue 750 ml", price: "200", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01021.webp" },
+            { id: 32, name: "Royal Stag 750 ml", price: "200", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01726.webp" },
+            { id: 33, name: "Signature Rare Aged 750 ml", price: "380", img: "https://static.livcheers.com/static/content/images/liquor/LCIN03987.webp" },
+            { id: 34, name: "Blender Pride 750 ml", price: "600", img: "https://static.livcheers.com/static/content/images/liquor/LCIN00269.webp" },
+            { id: 35, name: "Antiquity Blue 750 ml", price: "680", img: "https://static.livcheers.com/static/content/images/liquor/LCIN00108.webp" },
+            { id: 36, name: "Black Dog Black 750 ml", price: "810", img: "https://static.livcheers.com/static/content/images/liquor/LCIN00259.webp" },
+            { id: 37, name: "Old Monk XXX Dark Rum 750 ml", price: "650", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01534.webp" },
+            { id: 38, name: "Royal Challenge 750 ml", price: "190", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01709.webp" },
+            { id: 39, name: "Mc Dowells No 1", price: "340", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01396.webp" }
+        ];
+
+        // टेबल जनरेशन
+        const tbody = document.getElementById("canteenTableBody");
+        items.forEach(item => {
+            const tr = document.createElement("tr");
+            
+            const tdImg = document.createElement("td");
+            tdImg.innerHTML = `
+                <div class="img-wrapper" onclick="openModal('${item.img}')">
+                    <img src="${item.img}" alt="${item.name}">
+                </div>
+            `;
+            
+            const tdName = document.createElement("td");
+            tdName.style.fontWeight = "bold";
+            tdName.innerText = item.name;
+            
+            const tdPrice = document.createElement("td");
+            tdPrice.innerText = item.price;
+
+            tr.appendChild(tdImg);
+            tr.appendChild(tdName);
+            tr.appendChild(tdPrice);
+            tbody.appendChild(tr);
+        });
+
+        // पॉपअप फंक्शन
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImg");
+
+        function openModal(imageSrc) {
+            modalImg.src = imageSrc;
+            modal.style.display = "flex";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+            modalImg.src = "";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
