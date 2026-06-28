@@ -94,6 +94,38 @@
             font-weight: bold;
         }
 
+        /* केटेगरी टैब्स (Category Tabs) डिज़ाइन */
+        .category-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .tab-btn {
+            background-color: #1a5276;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .tab-btn:active {
+            transform: scale(0.95);
+        }
+
+        .tab-btn.active {
+            background-color: #cb4335; /* Active tab color */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
         /* टेबल डिज़ाइन (Mobile Friendly) */
         .table-container {
             width: 100%;
@@ -542,17 +574,6 @@ transform:translateY(0);
 
 <br/>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canteen Store Department</title>
-
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
 <header class="header-cover">
 
     <div class="left">
@@ -566,19 +587,22 @@ transform:translateY(0);
 
 </header>
 
-<script src="script.js"></script>
-
-</body>
-</html>
-
 <br/>
 
 
-        <p style="text-align: left;"> सभी कमीशन्ड अधिकारियों को कैंटीन में उपलब्ध समस्त ग्रोसरी तथा मदिरा एवं तंबाकू उत्पादों पर 80% की विशेष छूट प्रदान की जाती है।
+        <p style="text-align: left; padding: 0 10px;"> सभी कमीशन्ड अधिकारियों को कैंटीन में उपलब्ध समस्त ग्रोसरी तथा मदिरा एवं तंबाकू उत्पादों पर 80% की विशेष छूट प्रदान की जाती है।
 JCO, NCO एवं अग्निवीर के लिए पूर्व निर्धारित दरें एवं छूट पूर्ववत प्रभावी रहेंगी। </p>
         <br/>
 
-        <strong><p style="text-align: left;">SPECIAL DISCOUNT THIS PRODUCTS</p></strong>
+        <strong><p style="text-align: left; padding: 0 10px;">SPECIAL DISCOUNT THIS PRODUCTS</p></strong>
+    </div>
+
+    <!-- 4 Sections Tabs -->
+    <div class="category-tabs">
+        <button id="btn-groceries" class="tab-btn" onclick="filterCategory('groceries', 'btn-groceries')">Groceries</button>
+        <button id="btn-liquor" class="tab-btn" onclick="filterCategory('liquor', 'btn-liquor')">Liquor</button>
+        <button id="btn-tobacco" class="tab-btn" onclick="filterCategory('tobacco', 'btn-tobacco')">Tobacco</button>
+        <button id="btn-officer" class="tab-btn" onclick="filterCategory('officer', 'btn-officer')">Officer Facility</button>
     </div>
 
     <div class="table-container">
@@ -636,73 +660,110 @@ JCO, NCO एवं अग्निवीर के लिए पूर्व न
             }, 5000); // 5000 मिलीसेकंड = 5 सेकंड
         });
 
-        // 18 चीजों की लिस्ट
+        // केटेगरी के साथ पूरी लिस्ट और ऑफिसर फैसिलिटी के 10 नए आइटम
         const items = [
-            { id: 1, name: "Amul Gold Full Cream 500 ml", price: "23", img: "https://www.bbassets.com/media/uploads/p/l/40090893_8-amul-amul-gold.jpg" },
-            { id: 2, name: "Rasoi ka Raja Wheat Atta 10 kg", price: "180", img: "https://dukaan.b-cdn.net/1000x1000/webp/141851/7c81b3a4-639f-4104-a289-3827d5e1fecc.png" },
-            { id: 3, name: "Aashirvaad Shudh Chakki Atta 10 kg", price: "210", img: "https://www.bbassets.com/media/uploads/p/l/40127505_9-aashirvaad-shudh-chakki-atta.jpg" },
-            { id: 4, name: "Fortune Refined Oil 5 ltr", price: "480", img: "https://m.media-amazon.com/images/I/71LXjYmTsoL.jpg" },
-            { id: 5, name: "Surf Excel Detergent Powder - 5 Kg", price: "500", img: "https://m.media-amazon.com/images/I/61s5orKgmwL._AC_UF1000,1000_QL80_.jpg" },
-            { id: 6, name: "Amul Taaza Toned Milk 500 ml", price: "22", img: "https://cdn.grofers.com/da/cms-assets/cms/product/52173fba-2d70-40f9-adae-eb4e22696b4f.jpg" },
-            { id: 7, name: "Amul Masti Curd 390 g", price: "28", img: "https://cdn.grofers.com/da/cms-assets/cms/product/2107cdc3-8d54-41fb-a7ee-89d8573b9f06.jpg" },
-            { id: 8, name: "Amul Pure Ghee 1 ltr", price: "480", img: "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_600/NI_CATALOG/IMAGES/CIW/2024/3/23/4103cb54-85db-4c57-853b-181eb2cf3baa_ghee_4952HKRHGW_MN.png" },
-            { id: 9, name: "Paras Desi Ghee 1 ltr", price: "360", img: "https://m.media-amazon.com/images/I/814jlv806WL.jpg" },
-            { id: 10, name: "TATA Salt 1 kg", price: "17", img: "https://upload.wikimedia.org/wikipedia/en/7/79/Tata_salt_packet_photo.webp" },
-            { id: 11, name: "Fortune Sugur 5 kg", price: "165", img: "https://m.media-amazon.com/images/I/81zVrBm4jSL.jpg" },
-            { id: 12, name: "Taj Mahal Tea 1 kg", price: "190", img: "https://aapkabazar.co/_next/image?url=https%3A%2F%2Fimage.aapkabazar.co%2Fproduct%2F3239%2F1698385390663.png%3Ftype%3Dwebp%26width%3D600&w=3840&q=75" },
-            { id: 13, name: "Nescafe Classic Pure Coffee Powder 200 g", price: "450", img: "https://images.jdmagicbox.com/quickquotes/images_main/mtc0oda2mti5oq-1748061299-ft1xekc7.jpg" },
-            { id: 14, name: "English Oven White Bread 700 g", price: "35", img: "https://www.bbassets.com/media/uploads/p/l/251037_14-coca-cola-soft-drink-original-taste.jpg" },
-            { id: 15, name: "Amul Salted Butter 100 g", price: "30", img: "https://nagabazaar.com/cdn/shop/files/Amul-Pasteurised-Butter-100-g.jpg?v=1747519848&width=1024" },
-            { id: 16, name: "Amul Fresh Paneer", price: "40", img: "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/da/cms-assets/cms/product/7a1700ee-dd38-49cf-b34e-171ff84ac0e7.png?bg_token=color.background.quaternary" },
-            { id: 17, name: "Fortune Kachi Ghani Mustard Oil 1 l", price: "90", img: "https://www.bbassets.com/media/uploads/p/xl/276764_12-fortune-fortune-premium-kachi-ghani-pure-mustard-oil.jpg" },
-            { id: 18, name: "MARLBORO FILTER BLACK", price: "70", img: "https://royalpuff.in/wp-content/uploads/2025/04/MARLBORO-FILTER-BLACK-1.jpg" },
-            { id: 19, name: "Marlboro Advance Compact", price: "30", img: "https://royalpuff.in/wp-content/uploads/2025/03/MARLBORO-COMPACT.jpg" },
-            { id: 20, name: "Gold Flake Small (10 Pieces)", price: "60", img: "https://www.topintownstore.com/wp-content/uploads/2024/11/gold-flake-small.webp" },
-            { id: 21, name: "Gold Flake Kings (10 Pieces)", price: "150", img: "https://www.topintownstore.com/wp-content/uploads/img_9413-1536x1536.jpeg" },
-            { id: 22, name: "Classic Ice Burst (10 Pieces)", price: "110", img: "https://www.topintownstore.com/wp-content/uploads/img_1178-981x1536.jpeg" },
-            { id: 23, name: "Wills Classic Mild (10 Pieces)", price: "150", img: "https://www.topintownstore.com/wp-content/uploads/2024/11/wills-classic-mild-10-sticks.webp" },
-            { id: 24, name: "Capstain (10 Pieces)", price: "50", img: "https://img.thecdn.in/475012/SKU-0028_0-1760352598052.jpg?width=600&format=webp" },
-            { id: 25, name: "Total Pack of 10 Sticks", price: "40", img: "https://cdn.dotpe.in/longtail/store-items/8498388/D3BL8wr4.webp" },
-            { id: 26, name: "Cavanders Gold Leaf (10 Pieces)", price: "30", img: "https://tpackss.globaltobaccocontrol.org/sites/default/files/styles/500x500/public/pack_images/IND_DEL_H2_001_8.JPG?itok=tqYPc5nX" },
-            { id: 27, name: "More India W1 10 Sticks", price: "60", img: "https://smokekart.in/cdn/shop/files/more-international-cigarettes.jpg?v=1758166783" },
-            { id: 28, name: "8 Pm Special Rare 750 ml", price: "210", img: "https://static.livcheers.com/static/content/images/liquor/LCIN02310.webp" },
-            { id: 29, name: "Bagpiper Classic 750 ml", price: "190", img: "https://static.livcheers.com/static/content/images/liquor/LCIN02320.webp" },
-            { id: 30, name: "Mcdowell No1 Platinum 750 ml", price: "195", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01402.webp" },
-            { id: 31, name: "Imperial Blue 750 ml", price: "200", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01021.webp" },
-            { id: 32, name: "Royal Stag 750 ml", price: "200", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01726.webp" },
-            { id: 33, name: "Signature Rare Aged 750 ml", price: "380", img: "https://static.livcheers.com/static/content/images/liquor/LCIN03987.webp" },
-            { id: 34, name: "Blender Pride 750 ml", price: "600", img: "https://static.livcheers.com/static/content/images/liquor/LCIN00269.webp" },
-            { id: 35, name: "Antiquity Blue 750 ml", price: "680", img: "https://static.livcheers.com/static/content/images/liquor/LCIN00108.webp" },
-            { id: 36, name: "Black Dog Black 750 ml", price: "810", img: "https://static.livcheers.com/static/content/images/liquor/LCIN00259.webp" },
-            { id: 37, name: "Old Monk XXX Dark Rum 750 ml", price: "650", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01534.webp" },
-            { id: 38, name: "Royal Challenge 750 ml", price: "190", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01709.webp" },
-            { id: 39, name: "Mc Dowells No 1", price: "340", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01396.webp" }
+            // Groceries
+            { id: 1, category: "groceries", name: "Amul Gold Full Cream 500 ml", price: "23", img: "https://www.bbassets.com/media/uploads/p/l/40090893_8-amul-amul-gold.jpg" },
+            { id: 2, category: "groceries", name: "Rasoi ka Raja Wheat Atta 10 kg", price: "180", img: "https://dukaan.b-cdn.net/1000x1000/webp/141851/7c81b3a4-639f-4104-a289-3827d5e1fecc.png" },
+            { id: 3, category: "groceries", name: "Aashirvaad Shudh Chakki Atta 10 kg", price: "210", img: "https://www.bbassets.com/media/uploads/p/l/40127505_9-aashirvaad-shudh-chakki-atta.jpg" },
+            { id: 4, category: "groceries", name: "Fortune Refined Oil 5 ltr", price: "480", img: "https://m.media-amazon.com/images/I/71LXjYmTsoL.jpg" },
+            { id: 5, category: "groceries", name: "Surf Excel Detergent Powder - 5 Kg", price: "500", img: "https://m.media-amazon.com/images/I/61s5orKgmwL._AC_UF1000,1000_QL80_.jpg" },
+            { id: 6, category: "groceries", name: "Amul Taaza Toned Milk 500 ml", price: "22", img: "https://cdn.grofers.com/da/cms-assets/cms/product/52173fba-2d70-40f9-adae-eb4e22696b4f.jpg" },
+            { id: 7, category: "groceries", name: "Amul Masti Curd 390 g", price: "28", img: "https://cdn.grofers.com/da/cms-assets/cms/product/2107cdc3-8d54-41fb-a7ee-89d8573b9f06.jpg" },
+            { id: 8, category: "groceries", name: "Amul Pure Ghee 1 ltr", price: "480", img: "https://instamart-media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,h_600/NI_CATALOG/IMAGES/CIW/2024/3/23/4103cb54-85db-4c57-853b-181eb2cf3baa_ghee_4952HKRHGW_MN.png" },
+            { id: 9, category: "groceries", name: "Paras Desi Ghee 1 ltr", price: "360", img: "https://m.media-amazon.com/images/I/814jlv806WL.jpg" },
+            { id: 10, category: "groceries", name: "TATA Salt 1 kg", price: "17", img: "https://upload.wikimedia.org/wikipedia/en/7/79/Tata_salt_packet_photo.webp" },
+            { id: 11, category: "groceries", name: "Fortune Sugur 5 kg", price: "165", img: "https://m.media-amazon.com/images/I/81zVrBm4jSL.jpg" },
+            { id: 12, category: "groceries", name: "Taj Mahal Tea 1 kg", price: "190", img: "https://aapkabazar.co/_next/image?url=https%3A%2F%2Fimage.aapkabazar.co%2Fproduct%2F3239%2F1698385390663.png%3Ftype%3Dwebp%26width%3D600&w=3840&q=75" },
+            { id: 13, category: "groceries", name: "Nescafe Classic Pure Coffee Powder 200 g", price: "450", img: "https://images.jdmagicbox.com/quickquotes/images_main/mtc0oda2mti5oq-1748061299-ft1xekc7.jpg" },
+            { id: 14, category: "groceries", name: "English Oven White Bread 700 g", price: "35", img: "https://www.bbassets.com/media/uploads/p/l/251037_14-coca-cola-soft-drink-original-taste.jpg" },
+            { id: 15, category: "groceries", name: "Amul Salted Butter 100 g", price: "30", img: "https://nagabazaar.com/cdn/shop/files/Amul-Pasteurised-Butter-100-g.jpg?v=1747519848&width=1024" },
+            { id: 16, category: "groceries", name: "Amul Fresh Paneer", price: "40", img: "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/da/cms-assets/cms/product/7a1700ee-dd38-49cf-b34e-171ff84ac0e7.png?bg_token=color.background.quaternary" },
+            { id: 17, category: "groceries", name: "Fortune Kachi Ghani Mustard Oil 1 l", price: "90", img: "https://www.bbassets.com/media/uploads/p/xl/276764_12-fortune-fortune-premium-kachi-ghani-pure-mustard-oil.jpg" },
+            
+            // Tobacco
+            { id: 18, category: "tobacco", name: "MARLBORO FILTER BLACK", price: "70", img: "https://royalpuff.in/wp-content/uploads/2025/04/MARLBORO-FILTER-BLACK-1.jpg" },
+            { id: 19, category: "tobacco", name: "Marlboro Advance Compact", price: "30", img: "https://royalpuff.in/wp-content/uploads/2025/03/MARLBORO-COMPACT.jpg" },
+            { id: 20, category: "tobacco", name: "Gold Flake Small (10 Pieces)", price: "60", img: "https://www.topintownstore.com/wp-content/uploads/2024/11/gold-flake-small.webp" },
+            { id: 21, category: "tobacco", name: "Gold Flake Kings (10 Pieces)", price: "150", img: "https://www.topintownstore.com/wp-content/uploads/img_9413-1536x1536.jpeg" },
+            { id: 22, category: "tobacco", name: "Classic Ice Burst (10 Pieces)", price: "110", img: "https://www.topintownstore.com/wp-content/uploads/img_1178-981x1536.jpeg" },
+            { id: 23, category: "tobacco", name: "Wills Classic Mild (10 Pieces)", price: "150", img: "https://www.topintownstore.com/wp-content/uploads/2024/11/wills-classic-mild-10-sticks.webp" },
+            { id: 24, category: "tobacco", name: "Capstain (10 Pieces)", price: "50", img: "https://img.thecdn.in/475012/SKU-0028_0-1760352598052.jpg?width=600&format=webp" },
+            { id: 25, category: "tobacco", name: "Total Pack of 10 Sticks", price: "40", img: "https://cdn.dotpe.in/longtail/store-items/8498388/D3BL8wr4.webp" },
+            { id: 26, category: "tobacco", name: "Cavanders Gold Leaf (10 Pieces)", price: "30", img: "https://tpackss.globaltobaccocontrol.org/sites/default/files/styles/500x500/public/pack_images/IND_DEL_H2_001_8.JPG?itok=tqYPc5nX" },
+            { id: 27, category: "tobacco", name: "More India W1 10 Sticks", price: "60", img: "https://smokekart.in/cdn/shop/files/more-international-cigarettes.jpg?v=1758166783" },
+            
+            // Liquor
+            { id: 28, category: "liquor", name: "8 Pm Special Rare 750 ml", price: "210", img: "https://static.livcheers.com/static/content/images/liquor/LCIN02310.webp" },
+            { id: 29, category: "liquor", name: "Bagpiper Classic 750 ml", price: "190", img: "https://static.livcheers.com/static/content/images/liquor/LCIN02320.webp" },
+            { id: 30, category: "liquor", name: "Mcdowell No1 Platinum 750 ml", price: "195", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01402.webp" },
+            { id: 31, category: "liquor", name: "Imperial Blue 750 ml", price: "200", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01021.webp" },
+            { id: 32, category: "liquor", name: "Royal Stag 750 ml", price: "200", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01726.webp" },
+            { id: 33, category: "liquor", name: "Signature Rare Aged 750 ml", price: "380", img: "https://static.livcheers.com/static/content/images/liquor/LCIN03987.webp" },
+            { id: 34, category: "liquor", name: "Blender Pride 750 ml", price: "600", img: "https://static.livcheers.com/static/content/images/liquor/LCIN00269.webp" },
+            { id: 35, category: "liquor", name: "Antiquity Blue 750 ml", price: "680", img: "https://static.livcheers.com/static/content/images/liquor/LCIN00108.webp" },
+            { id: 36, category: "liquor", name: "Black Dog Black 750 ml", price: "810", img: "https://static.livcheers.com/static/content/images/liquor/LCIN00259.webp" },
+            { id: 37, category: "liquor", name: "Old Monk XXX Dark Rum 750 ml", price: "650", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01534.webp" },
+            { id: 38, category: "liquor", name: "Royal Challenge 750 ml", price: "190", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01709.webp" },
+            { id: 39, category: "liquor", name: "Mc Dowells No 1", price: "340", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01396.webp" },
+
+            // Officer Facility (10 Dummy Items)
+            { id: 40, category: "officer", name: "Officer Smart Card Cover", price: "50", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
+            { id: 41, category: "officer", name: "Premium Leather Belt", price: "450", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
+            { id: 42, category: "officer", name: "Peak Cap Cover", price: "120", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
+            { id: 43, category: "officer", name: "Officer Oxford Shoes Black", price: "1200", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
+            { id: 44, category: "officer", name: "Mess Dress Fabric", price: "850", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
+            { id: 45, category: "officer", name: "Sam Browne Belt", price: "950", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
+            { id: 46, category: "officer", name: "Regimental Tie", price: "150", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
+            { id: 47, category: "officer", name: "White PT Shoes", price: "450", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
+            { id: 48, category: "officer", name: "Premium Track Suit", price: "1100", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
+            { id: 49, category: "officer", name: "VIP Briefcase", price: "2500", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" }
         ];
 
-        // टेबल जनरेशन
-        const tbody = document.getElementById("canteenTableBody");
-        items.forEach(item => {
-            const tr = document.createElement("tr");
-            
-            const tdImg = document.createElement("td");
-            tdImg.innerHTML = `
-                <div class="img-wrapper" onclick="openModal('${item.img}')">
-                    <img src="${item.img}" alt="${item.name}">
-                </div>
-            `;
-            
-            const tdName = document.createElement("td");
-            tdName.style.fontWeight = "bold";
-            tdName.innerText = item.name;
-            
-            const tdPrice = document.createElement("td");
-            tdPrice.innerText = item.price;
+        // टेबल को केटेगरी के अनुसार जनरेट करने का फंक्शन
+        function filterCategory(category, btnId) {
+            // सभी बटनों से active क्लास हटाएं
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            // जो बटन क्लिक हुआ है उसमें active क्लास जोड़ें
+            document.getElementById(btnId).classList.add('active');
 
-            tr.appendChild(tdImg);
-            tr.appendChild(tdName);
-            tr.appendChild(tdPrice);
-            tbody.appendChild(tr);
-        });
+            const tbody = document.getElementById("canteenTableBody");
+            tbody.innerHTML = ""; // टेबल खाली करें
+            
+            // सिर्फ उस केटेगरी के आइटम्स निकालें
+            const filteredItems = items.filter(item => item.category === category);
+            
+            // उन्हें टेबल में दिखाएं
+            filteredItems.forEach(item => {
+                const tr = document.createElement("tr");
+                
+                const tdImg = document.createElement("td");
+                tdImg.innerHTML = `
+                    <div class="img-wrapper" onclick="openModal('${item.img}')">
+                        <img src="${item.img}" alt="${item.name}">
+                    </div>
+                `;
+                
+                const tdName = document.createElement("td");
+                tdName.style.fontWeight = "bold";
+                tdName.innerText = item.name;
+                
+                const tdPrice = document.createElement("td");
+                tdPrice.innerText = item.price;
+
+                tr.appendChild(tdImg);
+                tr.appendChild(tdName);
+                tr.appendChild(tdPrice);
+                tbody.appendChild(tr);
+            });
+        }
+
+        // पेज लोड होने पर पहली बार 'Groceries' लिस्ट दिखाई देगी
+        window.onload = function() {
+            filterCategory('groceries', 'btn-groceries');
+        };
 
         // पॉपअप फंक्शन
         const modal = document.getElementById("imageModal");
@@ -724,22 +785,14 @@ JCO, NCO एवं अग्निवीर के लिए पूर्व न
             }
         }
 
-// Image Hover Animation
-
-const image = document.querySelector(".left img");
-
-image.addEventListener("mouseenter",()=>{
-
-    image.style.transform="scale(1.08)";
-
-});
-
-image.addEventListener("mouseleave",()=>{
-
-    image.style.transform="scale(1)";
-
-});
-
+        // Image Hover Animation
+        const image = document.querySelector(".left img");
+        image.addEventListener("mouseenter",()=>{
+            image.style.transform="scale(1.08)";
+        });
+        image.addEventListener("mouseleave",()=>{
+            image.style.transform="scale(1)";
+        });
 
     </script>
 </body>
