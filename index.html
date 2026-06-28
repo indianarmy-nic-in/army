@@ -6,32 +6,30 @@
     <title>URC HQ 1 CROPS - Canteen Facilities</title>
 
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes"> <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    
+    <meta name="mobile-web-app-capable" content="yes"> 
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="URC Canteen">
     
     <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAxc_XC5ofvdcanIPc9yHhEgGoRgkyBaDu_OCqE42RXSFLTlQZTKNRsWLdQLROR8kxYhdk4qjUI3wMiDLePZ_w1sp4ViXxYTiAgcy8r69kA6k7MUOau_tPbnqR1kvTE-XMuD0kWehwrhfVWiG1a3cuINvBjgbM1KPGCRqBuowG5zjZMBbYzpHRoYo1aG8/s2048/OFFICER.jpeg">
     
     <style>
-        /* कंटेंट कॉपी होने से रोकने के लिए (Never copy content) */
+        /* कंटेंट कॉपी होने से रोकने के लिए */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 10px;
+            padding: 0; /* Padding removed for full width header */
             background-color: #f4f4f9;
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
             -webkit-touch-callout: none;
+            overflow-x: hidden;
         }
 
-        /* 5 सेकंड का पीला प्रीलोडर (Yellow Preloader) */
+        /* 5 सेकंड का पीला प्रीलोडर */
         #preloader {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background-color: #FFEB3B;
             z-index: 99999;
             display: flex;
@@ -41,34 +39,116 @@
             transition: opacity 0.5s ease-out;
         }
 
-        /* प्रीलोडर का चित्र - ऊपर से ज़ूम होता हुआ आएगा */
         .preloader-logo {
             width: 200px;
             height: 90px;
             pointer-events: none;
-            /* ड्रॉप और ज़ूम एनीमेशन */
             animation: dropAndZoom 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
         }
 
         @keyframes dropAndZoom {
-            0% { 
-                transform: translateY(-100vh) scale(0.2); 
-                opacity: 0; 
-            }
-            60% { 
-                transform: translateY(20px) scale(1.2); 
-                opacity: 1; 
-            }
-            100% { 
-                transform: translateY(0) scale(1); 
-                opacity: 1; 
-            }
+            0% { transform: translateY(-100vh) scale(0.2); opacity: 0; }
+            60% { transform: translateY(20px) scale(1.2); opacity: 1; }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* स्लाइडिंग एनिमेशन (प्रीलोडर के बाद) */
+        #slide-transition {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #f4f4f9;
+            z-index: 99998;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .slide-icon {
+            width: 80px;
+            position: absolute;
+            left: -100px;
+            animation: slideRight 3s linear forwards;
+        }
+
+        @keyframes slideRight {
+            0% { left: -100px; }
+            100% { left: 100%; }
+        }
+
+        /* मेन कंटेंट कंटेनर */
+        #main-content {
+            display: none; /* स्लाइडिंग एनिमेशन के बाद दिखेगा */
+        }
+
+        /* प्रोफ़ाइल सेक्शन */
+        .profile-section {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: #fff;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .profile-img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #1a5276;
+            margin-right: 12px;
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .profile-name {
+            font-size: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-role {
+            font-size: 13px;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .profile-id {
+            font-size: 11px;
+            font-weight: bold;
+            color: #333;
+            margin-top: 2px;
+        }
+
+        /* Go to Cart Button */
+        .go-to-cart-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
         }
 
         /* टॉप हेडर सेटिंग्स */
         .header-section {
             text-align: center;
-            margin-bottom: 20px;
+            margin: 15px 0;
         }
 
         .mitra-icon {
@@ -94,7 +174,98 @@
             font-weight: bold;
         }
 
-        /* केटेगरी टैब्स (Category Tabs) डिज़ाइन */
+        /* फुल विड्थ हेडर कवर */
+        .header-cover {
+            width: 100vw;
+            margin-left: 0;
+            margin-right: 0;
+            height: 400px;
+            background-image: linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)), url("https://img.magnific.com/free-vector/decorative-tricolor-indian-flag-theme-texture_1055-7757.jpg?semt=ais_hybrid&w=740&q=80");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .left {
+            width: 45%; /* थोड़ा बढ़ाया गया है */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .left img {
+            width: 100%;
+            max-width: 500px;
+            height: 300px;
+            object-fit: contain;
+            animation: float 4s ease-in-out infinite;
+            transition: .4s;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,.5));
+        }
+
+        .left img:hover { transform: scale(1.05); }
+
+        .right {
+            width: 53%;
+            color: #fff;
+            z-index: 2;
+        }
+
+        .right h1 {
+            font-size: 60px;
+            font-weight: 900;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 15px rgba(0,0,0,.6);
+        }
+
+        .right p {
+            margin-top: 15px;
+            font-size: 28px;
+            letter-spacing: 5px;
+            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0,0,0,.5);
+        }
+
+        @keyframes float {
+            0%{ transform:translateY(0); }
+            50%{ transform:translateY(-10px); }
+            100%{ transform:translateY(0); }
+        }
+
+        /* Responsive Header Cover */
+        @media(max-width:992px){
+            .header-cover{ height:260px; padding:20px; }
+            .left img{ height:180px; }
+            .right h1{ font-size:36px; }
+            .right p{ font-size:18px; letter-spacing:3px; }
+        }
+        @media(max-width:768px){
+            .header-cover{ height:180px; padding:12px; }
+            .left img{ height:150px; }
+            .right h1{ font-size:21px; letter-spacing:1px; }
+            .right p{ margin-top:6px; font-size:11px; letter-spacing:2px; }
+        }
+        @media(max-width:480px){
+            .header-cover{ height:160px; padding:10px; }
+            .left img{ height:95px; }
+            .right h1{ font-size:17px; }
+            .right p{ font-size:10px; letter-spacing:1px; }
+        }
+
+        /* इनर कंटेंट पैडिंग (टेबल आदि के लिए) */
+        .inner-content { padding: 10px; }
+
+        /* केटेगरी टैब्स */
         .category-tabs {
             display: flex;
             flex-wrap: wrap;
@@ -117,66 +288,39 @@
             text-align: center;
         }
 
-        .tab-btn:active {
-            transform: scale(0.95);
+        .tab-btn:active { transform: scale(0.95); }
+        .tab-btn.active { background-color: #cb4335; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+
+        /* टेबल डिज़ाइन */
+        .table-container { width: 100%; overflow-x: hidden; }
+        table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        th, td { padding: 10px; text-align: center; border-bottom: 1px solid #ddd; font-size: 14px; vertical-align: middle; }
+        th { background-color: #1a5276; color: white; }
+
+        .img-wrapper { position: relative; display: inline-block; width: 45px; height: 45px; cursor: pointer; }
+        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; pointer-events: none; }
+        .img-wrapper::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 10; }
+
+        .price-text {
+            color: green;
+            font-weight: bold;
+            font-size: 15px;
+            display: block;
+            margin-bottom: 5px;
         }
 
-        .tab-btn.active {
-            background-color: #cb4335; /* Active tab color */
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-
-        /* टेबल डिज़ाइन (Mobile Friendly) */
-        .table-container {
-            width: 100%;
-            overflow-x: hidden;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-            font-size: 14px;
-            vertical-align: middle;
-        }
-
-        th {
-            background-color: #1a5276;
+        .add-to-cart-btn {
+            background-color: #ff9800;
             color: white;
-        }
-
-        /* इमेज सुरक्षा और डिज़ाइन */
-        .img-wrapper {
-            position: relative;
-            display: inline-block;
-            width: 45px;
-            height: 45px;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        .img-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 5px;
-            pointer-events: none;
-        }
-
-        .img-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 10;
-        }
-
-        /* निर्देश (Instructions) डिज़ाइन */
+        /* निर्देश सेक्शन */
         .instructions-section {
             margin-top: 25px;
             padding: 15px;
@@ -184,459 +328,185 @@
             border-left: 5px solid #cb4335;
             border-radius: 4px;
         }
+        .instructions-section h3 { margin-top: 0; font-size: 16px; color: #cb4335; text-align: left; }
+        .instructions-section ul { text-align: left; padding-left: 20px; font-size: 13px; color: #333; line-height: 1.6; margin-bottom: 0; }
 
-        .instructions-section h3 {
-            margin-top: 0;
-            font-size: 16px;
-            color: #cb4335;
-            text-align: left;
-        }
-
-        .instructions-section ul {
-            text-align: left;
-            padding-left: 20px;
-            font-size: 13px;
-            color: #333;
-            line-height: 1.6;
-            margin-bottom: 0;
-        }
-
-        /* पॉप-अप (Modal) डिज़ाइन */
+        /* सभी पॉप-अप (Modals) डिज़ाइन */
         .modal {
-            display: none; 
-            position: fixed; 
-            z-index: 1000; 
-            left: 0; top: 0;
-            width: 100%; height: 100%; 
-            background-color: rgba(0,0,0,0.85); 
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; z-index: 10000; left: 0; top: 0;
+            width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); 
+            justify-content: center; align-items: center;
         }
 
-        .modal-content-wrapper {
-            position: relative;
-            background: white;
-            padding: 10px;
-            border-radius: 8px;
-            max-width: 80%;
-            max-height: 80%;
-        }
-
-        .modal-content-wrapper img {
-            max-width: 100%;
-            max-height: 60vh;
-            display: block;
-            border-radius: 5px;
-            pointer-events: none;
+        .modal-content-wrapper, .cart-modal-content, .error-modal-content, .loading-modal-content {
+            position: relative; background: white; padding: 15px; border-radius: 8px;
+            max-width: 90%; max-height: 80%; width: 320px; text-align: center;
         }
         
-        .modal-content-wrapper::after {
-             content: '';
-             position: absolute;
-             top: 0; left: 0; right: 0; bottom: 0;
-             z-index: 10;
+        .modal-content-wrapper img {
+            max-width: 100%; max-height: 60vh; display: block; border-radius: 5px; pointer-events: none; margin: 0 auto;
         }
 
         .close {
-            position: absolute;
-            top: -12px; right: -12px;
-            color: white;
-            background: #e74c3c;
-            border-radius: 50%;
-            width: 28px; height: 28px;
-            text-align: center;
-            line-height: 28px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 1001;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            position: absolute; top: -12px; right: -12px; color: white; background: #e74c3c;
+            border-radius: 50%; width: 28px; height: 28px; text-align: center;
+            line-height: 28px; font-size: 18px; font-weight: bold; cursor: pointer;
+            z-index: 1001; box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
-/* ==========================
-   RESET
-========================== */
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
-}
-
-html,body{
-    width:100%;
-    overflow-x:hidden;
-    background:#eef2f7;
-}
-
-/* ==========================
-   HEADER COVER
-========================== */
-
-.header-cover{
-
-    width:100%;
-    height:400px;
-
-    background-image:
-    linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),
-    url("https://img.magnific.com/free-vector/decorative-tricolor-indian-flag-theme-texture_1055-7757.jpg?semt=ais_hybrid&w=740&q=80");
-
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-
-    padding:40px 60px;
-
-    overflow:hidden;
-    position:relative;
-
-}
-
-/* ==========================
-   LEFT IMAGE
-========================== */
-
-.left{
-
-    width:38%;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    z-index:2;
-
-}
-
-.left img{
-
-    width:100%;
-    max-width:500px;
-    height:300px;
-
-    object-fit:contain;
-
-    animation:float 4s ease-in-out infinite;
-
-    transition:.4s;
-
-    filter:drop-shadow(0 10px 20px rgba(0,0,0,.5));
-
-}
-
-.left img:hover{
-
-    transform:scale(1.05);
-
-}
-
-/* ==========================
-   RIGHT TEXT
-========================== */
-
-.right{
-
-    width:58%;
-    color:#fff;
-
-    z-index:2;
-
-}
-
-.right h1{
-
-    font-size:60px;
-
-    font-weight:900;
-
-    line-height:1.1;
-
-    text-transform:uppercase;
-
-    letter-spacing:2px;
-
-    text-shadow:0 4px 15px rgba(0,0,0,.6);
-
-}
-
-.right p{
-
-    margin-top:15px;
-
-    font-size:28px;
-
-    letter-spacing:5px;
-
-    font-weight:500;
-
-    text-shadow:0 2px 10px rgba(0,0,0,.5);
-
-}
-
-/* ==========================
-   FLOAT ANIMATION
-========================== */
-
-@keyframes float{
-
-0%{
-transform:translateY(0);
-}
-
-50%{
-transform:translateY(-10px);
-}
-
-100%{
-transform:translateY(0);
-}
-
-}
-
-/* ==========================
-   TABLET
-========================== */
-
-@media(max-width:992px){
-
-.header-cover{
-
-    height:260px;
-
-    padding:20px;
-
-}
-
-.left{
-
-    width:40%;
-
-}
-
-.left img{
-
-    height:180px;
-
-}
-
-.right{
-
-    width:56%;
-
-}
-
-.right h1{
-
-    font-size:36px;
-
-}
-
-.right p{
-
-    font-size:18px;
-
-    letter-spacing:3px;
-
-}
-
-}
-
-/* ==========================
-   MOBILE
-========================== */
-
-@media(max-width:768px){
-
-.header-cover{
-
-    width:100%;
-
-    height:180px;
-
-    padding:12px;
-
-}
-
-.left{
-
-    width:36%;
-
-}
-
-.left img{
-
-    width:100%;
-
-    height:150px;
-
-    object-fit:contain;
-
-}
-
-.right{
-
-    width:62%;
-
-    padding-left:8px;
-
-}
-
-.right h1{
-
-    font-size:21px;
-
-    line-height:1.2;
-
-    letter-spacing:1px;
-
-}
-
-.right p{
-
-    margin-top:6px;
-
-    font-size:11px;
-
-    letter-spacing:2px;
-
-}
-
-}
-
-/* ==========================
-   SMALL MOBILE
-========================== */
-
-@media(max-width:480px){
-
-.header-cover{
-
-    height:160px;
-
-    padding:10px;
-
-}
-
-.left{
-
-    width:35%;
-
-}
-
-.left img{
-
-    height:95px;
-
-}
-
-.right{
-
-    width:63%;
-
-}
-
-.right h1{
-
-    font-size:17px;
-
-}
-
-.right p{
-
-    font-size:10px;
-
-    letter-spacing:1px;
-
-}
-
-}
-
-
+        /* Cart Styles */
+        .cart-item { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding: 8px 0; font-size: 14px; text-align: left; }
+        .cart-total { font-size: 18px; font-weight: bold; margin-top: 15px; text-align: right; }
+        .checkout-btn {
+            background-color: #1a5276; color: white; border: none; padding: 10px; width: 100%;
+            border-radius: 5px; font-size: 16px; font-weight: bold; margin-top: 15px; cursor: pointer;
+        }
+
+        /* Loading Animation */
+        .loader {
+            border: 5px solid #f3f3f3; border-top: 5px solid #1a5276; border-radius: 50%;
+            width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 10px auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Error/Limit Reached Anim */
+        .cross-anim {
+            font-size: 50px;
+            animation: bounceIn 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            margin-bottom: 10px;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .error-modal-content p {
+            font-size: 16px; font-weight: bold; color: #d32f2f; line-height: 1.4;
+        }
     </style>
 </head>
 <body oncopy="return false" oncut="return false" onpaste="return false">
 
+    <!-- 1. Preloader -->
     <div id="preloader">
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTv81faWYq0op6iOt8tG8DQRLqn5D_wzU46SetD1GL1djprUReqRXfkQntuBknegX7Ashvn6yor_vOBdBdFFJQjXLG5j0P9-iNNa5_andy6QOWKQDpkRykGe4HJJI4W0usWURSp_Qu7fhOhTf4_sG5eQmvuMSOhXYO5VSMf24vpts08VrYF2wxGfdiywt0/s1747/A2251884-D132-4355-9AF9-C5B701E7C445.png" alt="Loading..." class="preloader-logo">
     </div>
 
-    <div class="header-section">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" alt="Mitra Icon" class="mitra-icon">
-        <div class="header-title">OFFICER CANTEEN FACILITIES</div>
-        <div class="header-subtitle">URC HQ 1 CROPS</div>
-
-
-<br/>
-
-<header class="header-cover">
-
-    <div class="left">
-        <img src="https://png.pngtree.com/png-clipart/20241121/original/pngtree-supermarket-shopping-basket-png-image_17283317.png" alt="Logo">
+    <!-- 2. Sliding Icon Animation -->
+    <div id="slide-transition">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" class="slide-icon" alt="Slide Icon">
     </div>
 
-    <div class="right">
-        <h1>CANTEEN STORE DEPARTMENT</h1>
-        <p>URC HQ 1 CORPS</p>
+    <!-- 3. Main Dashboard Content -->
+    <div id="main-content">
+        
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAxc_XC5ofvdcanIPc9yHhEgGoRgkyBaDu_OCqE42RXSFLTlQZTKNRsWLdQLROR8kxYhdk4qjUI3wMiDLePZ_w1sp4ViXxYTiAgcy8r69kA6k7MUOau_tPbnqR1kvTE-XMuD0kWehwrhfVWiG1a3cuINvBjgbM1KPGCRqBuowG5zjZMBbYzpHRoYo1aG8/s2048/OFFICER.jpeg" alt="Profile" class="profile-img">
+            <div class="profile-info">
+                <div class="profile-name">
+                    Capt Manish Chaudhary 
+                    <button id="goToCartBtn" class="go-to-cart-btn" style="display: none;" onclick="openCart()">Go To Cart</button>
+                </div>
+                <div class="profile-role">Staff Officer Grade II (OPS)</div>
+                <div class="profile-id">GA74890931589082228</div>
+            </div>
+        </div>
+
+        <div class="header-section">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" alt="Mitra Icon" class="mitra-icon">
+            <div class="header-title">OFFICER CANTEEN FACILITIES</div>
+            <div class="header-subtitle">URC HQ 1 CROPS</div>
+        </div>
+
+        <!-- Full Width Header Cover -->
+        <header class="header-cover">
+            <div class="left">
+                <img src="https://png.pngtree.com/png-clipart/20241121/original/pngtree-supermarket-shopping-basket-png-image_17283317.png" alt="Logo">
+            </div>
+            <div class="right">
+                <h1>CANTEEN STORE DEPARTMENT</h1>
+                <p>URC HQ 1 CORPS</p>
+            </div>
+        </header>
+
+        <div class="inner-content">
+            <p style="text-align: left; padding: 0 5px;"> सभी कमीशन्ड अधिकारियों को कैंटीन में उपलब्ध समस्त ग्रोसरी तथा मदिरा एवं तंबाकू उत्पादों पर 80% की विशेष छूट प्रदान की जाती है।
+            JCO, NCO एवं अग्निवीर के लिए पूर्व निर्धारित दरें एवं छूट पूर्ववत प्रभावी रहेंगी। </p>
+            <br/>
+            <strong><p style="text-align: left; padding: 0 5px;">SPECIAL DISCOUNT THIS PRODUCTS</p></strong>
+
+            <!-- 4 Sections Tabs -->
+            <div class="category-tabs">
+                <button id="btn-groceries" class="tab-btn" onclick="filterCategory('groceries', 'btn-groceries')">Groceries</button>
+                <button id="btn-liquor" class="tab-btn" onclick="filterCategory('liquor', 'btn-liquor')">Liquor</button>
+                <button id="btn-tobacco" class="tab-btn" onclick="filterCategory('tobacco', 'btn-tobacco')">Tobacco</button>
+                <button id="btn-officer" class="tab-btn" onclick="filterCategory('officer', 'btn-officer')">Officer Facility</button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Products</th>
+                            <th>Item Name</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="canteenTableBody">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="instructions-section">
+                <h3>भारतीय सेना कैंटीन निर्देश (Canteen Instructions)</h3>
+                <ul>
+                    <li>कैंटीन में प्रवेश केवल वैध स्मार्ट कार्ड धारकों के लिए ही मान्य है।</li>
+                    <li>आश्रितों (Dependents) को अपना डिपेंडेंट कार्ड साथ लाना अनिवार्य है।</li>
+                    <li>कृपया कैंटीन परिसर में अनुशासन और कतार (Queue) बनाए रखें।</li>
+                    <li>निर्धारित कोटा के अनुसार ही सामान प्रदान किया जाएगा।</li>
+                    <li>कैंटीन का समय: सुबह 09:00 बजे से दोपहर 13:30 बजे तक।</li>
+                    <li>दोपहर का समय: 15:30 बजे से शाम 18:00 बजे तक।</li>
+                    <li>कैंटीन हर सप्ताह मंगलवार (Tuesday) को पूर्णतया बंद रहेगी।</li>
+                    <li>सामान की अदला-बदली केवल बिलिंग की तारीख से 3 दिन के भीतर होगी।</li>
+                </ul>
+            </div>
+        </div>
     </div>
 
-</header>
-
-<br/>
-
-
-        <p style="text-align: left; padding: 0 10px;"> सभी कमीशन्ड अधिकारियों को कैंटीन में उपलब्ध समस्त ग्रोसरी तथा मदिरा एवं तंबाकू उत्पादों पर 80% की विशेष छूट प्रदान की जाती है।
-JCO, NCO एवं अग्निवीर के लिए पूर्व निर्धारित दरें एवं छूट पूर्ववत प्रभावी रहेंगी। </p>
-        <br/>
-
-        <strong><p style="text-align: left; padding: 0 10px;">SPECIAL DISCOUNT THIS PRODUCTS</p></strong>
-    </div>
-
-    <!-- 4 Sections Tabs -->
-    <div class="category-tabs">
-        <button id="btn-groceries" class="tab-btn" onclick="filterCategory('groceries', 'btn-groceries')">Groceries</button>
-        <button id="btn-liquor" class="tab-btn" onclick="filterCategory('liquor', 'btn-liquor')">Liquor</button>
-        <button id="btn-tobacco" class="tab-btn" onclick="filterCategory('tobacco', 'btn-tobacco')">Tobacco</button>
-        <button id="btn-officer" class="tab-btn" onclick="filterCategory('officer', 'btn-officer')">Officer Facility</button>
-    </div>
-
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>Products</th>
-                    <th>Item Name</th>
-                    <th>Amount (₹)</th>
-                </tr>
-            </thead>
-            <tbody id="canteenTableBody">
-            </tbody>
-        </table>
-    </div>
-
-    <div class="instructions-section">
-        <h3>भारतीय सेना कैंटीन निर्देश (Canteen Instructions)</h3>
-        <ul>
-            <li>कैंटीन में प्रवेश केवल वैध स्मार्ट कार्ड धारकों के लिए ही मान्य है।</li>
-            <li>आश्रितों (Dependents) को अपना डिपेंडेंट कार्ड साथ लाना अनिवार्य है।</li>
-            <li>कृपया कैंटीन परिसर में अनुशासन और कतार (Queue) बनाए रखें।</li>
-            <li>निर्धारित कोटा के अनुसार ही सामान प्रदान किया जाएगा।</li>
-            <li>कैंटीन का समय: सुबह 09:00 बजे से दोपहर 13:30 बजे तक।</li>
-            <li>दोपहर का समय: 15:30 बजे से शाम 18:00 बजे तक।</li>
-            <li>कैंटीन हर सप्ताह मंगलवार (Tuesday) को पूर्णतया बंद रहेगी।</li>
-            <li>सामान की अदला-बदली केवल बिलिंग की तारीख से 3 दिन के भीतर होगी।</li>
-        </ul>
-    </div>
-
+    <!-- Image Modal -->
     <div id="imageModal" class="modal">
         <div class="modal-content-wrapper">
-            <span class="close" onclick="closeModal()">&times;</span>
+            <span class="close" onclick="closeModal('imageModal')">&times;</span>
             <img id="modalImg" src="" alt="Popup Image">
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="cart-modal-content">
+            <span class="close" onclick="closeModal('cartModal')">&times;</span>
+            <h2 style="margin-top:0; color:#1a5276;">Your Cart</h2>
+            <div id="cartItemsList" style="max-height: 200px; overflow-y: auto; margin-bottom: 10px;"></div>
+            <div class="cart-total">Total: <span id="cartTotal" style="color:green">₹0</span></div>
+            <button class="checkout-btn" onclick="processCheckout()">Checkout Products</button>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal">
+        <div class="loading-modal-content">
+            <div class="loader"></div>
+            <h3 style="color:#555; margin:0;">Processing...</h3>
+        </div>
+    </div>
+
+    <!-- Error/Limit Modal -->
+    <div id="errorModal" class="modal">
+        <div class="error-modal-content">
+            <span class="close" onclick="closeModal('errorModal')">&times;</span>
+            <div class="cross-anim">❌</div>
+            <p>YOUR LIMIT IS COMPLETE THIS MONTH.<br><br>NEXT MONTH PURCHASE ALLOWED.</p>
         </div>
     </div>
 
@@ -649,18 +519,27 @@ JCO, NCO एवं अग्निवीर के लिए पूर्व न
             }
         });
 
-        // 5 सेकंड का प्रीलोडर टाइमर
+        // प्रीलोडर और स्लाइडिंग एनिमेशन लॉजिक
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.style.opacity = '0';
                 setTimeout(() => {
                     preloader.style.display = 'none';
+                    // प्रीलोडर खत्म, अब स्लाइड एनिमेशन दिखाएं
+                    const slideScreen = document.getElementById('slide-transition');
+                    slideScreen.style.display = 'flex';
+                    
+                    // 3 सेकंड (स्लाइड एनीमेशन टाइम) के बाद डैशबोर्ड खोलें
+                    setTimeout(() => {
+                        slideScreen.style.display = 'none';
+                        document.getElementById('main-content').style.display = 'block';
+                    }, 3000);
+
                 }, 500); 
-            }, 5000); // 5000 मिलीसेकंड = 5 सेकंड
+            }, 5000); // 5000 मिलीसेकंड = 5 सेकंड प्रीलोडर
         });
 
-        // केटेगरी के साथ पूरी लिस्ट और ऑफिसर फैसिलिटी के 10 नए आइटम
         const items = [
             // Groceries
             { id: 1, category: "groceries", name: "Amul Gold Full Cream 500 ml", price: "23", img: "https://www.bbassets.com/media/uploads/p/l/40090893_8-amul-amul-gold.jpg" },
@@ -707,7 +586,7 @@ JCO, NCO एवं अग्निवीर के लिए पूर्व न
             { id: 38, category: "liquor", name: "Royal Challenge 750 ml", price: "190", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01709.webp" },
             { id: 39, category: "liquor", name: "Mc Dowells No 1", price: "340", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01396.webp" },
 
-            // Officer Facility (10 Dummy Items)
+            // Officer Facility 
             { id: 40, category: "officer", name: "Officer Smart Card Cover", price: "50", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
             { id: 41, category: "officer", name: "Premium Leather Belt", price: "450", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
             { id: 42, category: "officer", name: "Peak Cap Cover", price: "120", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
@@ -720,28 +599,24 @@ JCO, NCO एवं अग्निवीर के लिए पूर्व न
             { id: 49, category: "officer", name: "VIP Briefcase", price: "2500", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" }
         ];
 
-        // टेबल को केटेगरी के अनुसार जनरेट करने का फंक्शन
+        let cartData = [];
+
+        // टेबल रेंडरर
         function filterCategory(category, btnId) {
-            // सभी बटनों से active क्लास हटाएं
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            // जो बटन क्लिक हुआ है उसमें active क्लास जोड़ें
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(btnId).classList.add('active');
 
             const tbody = document.getElementById("canteenTableBody");
-            tbody.innerHTML = ""; // टेबल खाली करें
+            tbody.innerHTML = ""; 
             
-            // सिर्फ उस केटेगरी के आइटम्स निकालें
             const filteredItems = items.filter(item => item.category === category);
             
-            // उन्हें टेबल में दिखाएं
             filteredItems.forEach(item => {
                 const tr = document.createElement("tr");
                 
                 const tdImg = document.createElement("td");
                 tdImg.innerHTML = `
-                    <div class="img-wrapper" onclick="openModal('${item.img}')">
+                    <div class="img-wrapper" onclick="openImageModal('${item.img}')">
                         <img src="${item.img}" alt="${item.name}">
                     </div>
                 `;
@@ -750,50 +625,83 @@ JCO, NCO एवं अग्निवीर के लिए पूर्व न
                 tdName.style.fontWeight = "bold";
                 tdName.innerText = item.name;
                 
-                const tdPrice = document.createElement("td");
-                tdPrice.innerText = item.price;
+                // ग्रीन प्राइस & Add To Cart Button
+                const tdAction = document.createElement("td");
+                tdAction.innerHTML = `
+                    <span class="price-text">₹${item.price}</span>
+                    <button class="add-to-cart-btn" onclick="addToCart(${item.id})">Add To Cart</button>
+                `;
 
                 tr.appendChild(tdImg);
                 tr.appendChild(tdName);
-                tr.appendChild(tdPrice);
+                tr.appendChild(tdAction);
                 tbody.appendChild(tr);
             });
         }
 
-        // पेज लोड होने पर पहली बार 'Groceries' लिस्ट दिखाई देगी
         window.onload = function() {
             filterCategory('groceries', 'btn-groceries');
         };
 
-        // पॉपअप फंक्शन
-        const modal = document.getElementById("imageModal");
-        const modalImg = document.getElementById("modalImg");
-
-        function openModal(imageSrc) {
-            modalImg.src = imageSrc;
-            modal.style.display = "flex";
+        // Cart Logic
+        function addToCart(id) {
+            const item = items.find(i => i.id === id);
+            cartData.push(item);
+            document.getElementById("goToCartBtn").style.display = "block";
+            // छोटा एनिमेशन इफ़ेक्ट के लिए
+            const btn = document.getElementById("goToCartBtn");
+            btn.style.animation = 'none';
+            setTimeout(() => btn.style.animation = 'popIn 0.3s ease-out', 10);
         }
 
-        function closeModal() {
-            modal.style.display = "none";
-            modalImg.src = "";
+        function openCart() {
+            const listDiv = document.getElementById("cartItemsList");
+            const totalSpan = document.getElementById("cartTotal");
+            
+            listDiv.innerHTML = "";
+            let total = 0;
+            
+            cartData.forEach(item => {
+                total += parseInt(item.price);
+                listDiv.innerHTML += `
+                    <div class="cart-item">
+                        <span>${item.name}</span>
+                        <span style="color:green; font-weight:bold;">₹${item.price}</span>
+                    </div>
+                `;
+            });
+
+            totalSpan.innerText = `₹${total}`;
+            document.getElementById("cartModal").style.display = "flex";
+        }
+
+        function processCheckout() {
+            document.getElementById("cartModal").style.display = "none";
+            document.getElementById("loadingModal").style.display = "flex";
+            
+            // 4 सेकंड लोडिंग
+            setTimeout(() => {
+                document.getElementById("loadingModal").style.display = "none";
+                document.getElementById("errorModal").style.display = "flex";
+            }, 4000);
+        }
+
+        // Modals Management
+        function openImageModal(src) {
+            document.getElementById("modalImg").src = src;
+            document.getElementById("imageModal").style.display = "flex";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+            if(modalId === 'imageModal') document.getElementById("modalImg").src = "";
         }
 
         window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
+            if (event.target.classList.contains("modal")) {
+                event.target.style.display = "none";
             }
         }
-
-        // Image Hover Animation
-        const image = document.querySelector(".left img");
-        image.addEventListener("mouseenter",()=>{
-            image.style.transform="scale(1.08)";
-        });
-        image.addEventListener("mouseleave",()=>{
-            image.style.transform="scale(1)";
-        });
-
     </script>
 </body>
 </html>
