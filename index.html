@@ -12,13 +12,15 @@
     
     <link rel="apple-touch-icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAxc_XC5ofvdcanIPc9yHhEgGoRgkyBaDu_OCqE42RXSFLTlQZTKNRsWLdQLROR8kxYhdk4qjUI3wMiDLePZ_w1sp4ViXxYTiAgcy8r69kA6k7MUOau_tPbnqR1kvTE-XMuD0kWehwrhfVWiG1a3cuINvBjgbM1KPGCRqBuowG5zjZMBbYzpHRoYo1aG8/s2048/OFFICER.jpeg">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <style>
-        /* कंटेंट कॉपी होने से रोकने के लिए */
+        /* कंटेंट कॉपी रोकने के लिए और फुल व्हाइट बैकग्राउंड */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0; /* Padding removed for full width header */
-            background-color: #f4f4f9;
+            padding: 0;
+            background-color: #ffffff;
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
@@ -26,7 +28,7 @@
             overflow-x: hidden;
         }
 
-        /* 5 सेकंड का पीला प्रीलोडर */
+        /* जल्दी खुलने के लिए प्रीलोडर एनीमेशन को फास्ट किया */
         #preloader {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -36,57 +38,92 @@
             justify-content: center;
             align-items: center;
             opacity: 1;
-            transition: opacity 0.5s ease-out;
+            transition: opacity 0.4s ease-out;
         }
 
         .preloader-logo {
             width: 200px;
             height: 90px;
             pointer-events: none;
-            animation: dropAndZoom 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
+            animation: dropAndZoom 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
         }
 
         @keyframes dropAndZoom {
             0% { transform: translateY(-100vh) scale(0.2); opacity: 0; }
-            60% { transform: translateY(20px) scale(1.2); opacity: 1; }
+            60% { transform: translateY(15px) scale(1.1); opacity: 1; }
             100% { transform: translateY(0) scale(1); opacity: 1; }
         }
 
-        /* स्लाइडिंग एनिमेशन (प्रीलोडर के बाद) */
+        /* फास्ट स्लाइडिंग एनिमेशन और 6 इमेज स्लाइडर कंटेनर */
         #slide-transition {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #f4f4f9;
+            background-color: #ffffff;
             z-index: 99998;
+            justify-content: center;
             align-items: center;
             overflow: hidden;
         }
 
-        .slide-icon {
-            width: 80px;
-            position: absolute;
-            left: -100px;
-            animation: slideRight 3s linear forwards;
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        @keyframes slideRight {
-            0% { left: -100px; }
-            100% { left: 100%; }
+        .slide-img {
+            position: absolute;
+            max-width: 60%; /* पहले 90% था, अब छोटा कर दिया गया है */
+            max-height: 35vh; /* हाइट भी छोटी कर दी गई है */
+            object-fit: contain; /* चित्र हमेशा अपनी सही शेप में सेट रहेगा */
+            display: none;
+            border-radius: 8px;
+        }
+
+        .slide-img.active {
+            display: block;
+            animation: slideInRight 0.6s ease-out forwards; /* थोड़ा स्मूथ आने के लिए 0.6s किया गया */
+        }
+
+        @keyframes slideInRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
         }
 
         /* मेन कंटेंट कंटेनर */
         #main-content {
-            display: none; /* स्लाइडिंग एनिमेशन के बाद दिखेगा */
+            display: none;
         }
 
-        /* प्रोफ़ाइल सेक्शन */
+        /* टॉप बार (स्थिर चित्र, नो एनीमेशन) */
+        .top-logo-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: #ffffff;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .top-logo {
+            width: 70%px;
+            height: 50px;
+            border-radius: 5%;
+            object-fit: cover;
+        }
+
+        /* फ्लैट प्रोफ़ाइल सेक्शन (नो 3D) */
         .profile-section {
             display: flex;
             align-items: center;
-            padding: 10px 15px;
-            background: #fff;
-            border-bottom: 2px solid #ddd;
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            margin: 0;
         }
 
         .profile-img {
@@ -102,6 +139,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            flex-grow: 1;
         }
 
         .profile-name {
@@ -110,7 +148,8 @@
             color: #2c3e50;
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            width: 100%;
         }
 
         .profile-role {
@@ -126,180 +165,111 @@
             margin-top: 2px;
         }
 
-        /* Go to Cart Button */
+        /* ब्लू गो टू कार्ट बटन - सफेद टेक्स्ट और आइकन */
         .go-to-cart-btn {
-            background-color: #28a745;
-            color: white;
+            background-color: #0056b3;
+            color: #ffffff;
             border: none;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 4px;
             font-size: 12px;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            animation: popIn 0.3s ease-out;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .go-to-cart-btn i {
+            color: #ffffff;
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0); }
-            100% { transform: scale(1); }
-        }
-
-        /* टॉप हेडर सेटिंग्स */
+        /* मित्रा आइकन सेटिंग्स (नो शैडो) */
         .header-section {
             text-align: center;
             margin: 15px 0;
         }
 
         .mitra-icon {
-            width: 60px;
-            height: 60px;
-            object-fit: cover;
+            width: 170px;
+            height: 80px;
+            object-fit: contain;
             margin: 0 auto;
             display: block;
             pointer-events: none;
         }
 
-        .header-title {
-            font-size: 22px;
-            font-weight: bold;
-            margin: 10px 0 5px 0;
-            color: #2c3e50;
-        }
-
-        .header-subtitle {
-            font-size: 14px;
-            margin: 0;
-            color: #555;
-            font-weight: bold;
-        }
-
-        /* फुल विड्थ हेडर कवर */
+        /* मोबाइल रेस्पॉन्सिव हेडर (हाइट थोड़ी बढ़ाई गई है - 1600 / 600) */
         .header-cover {
-            width: 100vw;
-            margin-left: 0;
-            margin-right: 0;
-            height: 400px;
-            background-image: linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)), url("https://img.magnific.com/free-vector/decorative-tricolor-indian-flag-theme-texture_1055-7757.jpg?semt=ais_hybrid&w=740&q=80");
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 1600 / 500; 
+            background-image: url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg9E3SF346vJARNHyK9XtArsn53sgA1S3vWPyPKYBLyAhGEo6miCk6JieGDiQ-wIQPMDS1tuTnEiY-zOAWkVAAlidOPgpdZnj7Eoa5bnBpJgxvAeRDCCgumnsVb9j-BvhIGqjvYDEXHAYR2rypD5fOCptIcj7owtXsJhA5RPmLOiHxY72SYuox0BhtEIMe9/s1856/IMG_6702.png");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 40px 60px;
-            box-sizing: border-box;
-            overflow: hidden;
-            position: relative;
+            display: block;
         }
 
-        .left {
-            width: 45%; /* थोड़ा बढ़ाया गया है */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-        }
-
-        .left img {
-            width: 100%;
-            max-width: 500px;
-            height: 300px;
-            object-fit: contain;
-            animation: float 4s ease-in-out infinite;
-            transition: .4s;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,.5));
-        }
-
-        .left img:hover { transform: scale(1.05); }
-
-        .right {
-            width: 53%;
-            color: #fff;
-            z-index: 2;
-        }
-
-        .right h1 {
-            font-size: 60px;
-            font-weight: 900;
-            line-height: 1.1;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 4px 15px rgba(0,0,0,.6);
-        }
-
-        .right p {
-            margin-top: 15px;
-            font-size: 28px;
-            letter-spacing: 5px;
-            font-weight: 500;
-            text-shadow: 0 2px 10px rgba(0,0,0,.5);
-        }
-
-        @keyframes float {
-            0%{ transform:translateY(0); }
-            50%{ transform:translateY(-10px); }
-            100%{ transform:translateY(0); }
-        }
-
-        /* Responsive Header Cover */
-        @media(max-width:992px){
-            .header-cover{ height:260px; padding:20px; }
-            .left img{ height:180px; }
-            .right h1{ font-size:36px; }
-            .right p{ font-size:18px; letter-spacing:3px; }
-        }
-        @media(max-width:768px){
-            .header-cover{ height:180px; padding:12px; }
-            .left img{ height:150px; }
-            .right h1{ font-size:21px; letter-spacing:1px; }
-            .right p{ margin-top:6px; font-size:11px; letter-spacing:2px; }
-        }
-        @media(max-width:480px){
-            .header-cover{ height:160px; padding:10px; }
-            .left img{ height:95px; }
-            .right h1{ font-size:17px; }
-            .right p{ font-size:10px; letter-spacing:1px; }
-        }
-
-        /* इनर कंटेंट पैडिंग (टेबल आदि के लिए) */
+        /* इनर कंटेंट पैडिंग */
         .inner-content { padding: 10px; }
 
-        /* केटेगरी टैब्स */
+        /* केटेगरी टैब्स - सिंगल लाइन स्क्रॉल */
         .category-tabs {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: flex-start;
             gap: 8px;
             margin: 15px 0;
+            padding-bottom: 5px;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .category-tabs::-webkit-scrollbar {
+            display: none;
         }
 
         .tab-btn {
             background-color: #1a5276;
             color: white;
             border: none;
-            padding: 10px 15px;
+            padding: 10px 16px;
             border-radius: 5px;
             font-size: 14px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-            flex-grow: 1;
-            text-align: center;
+            transition: background 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .tab-btn:active { transform: scale(0.95); }
-        .tab-btn.active { background-color: #cb4335; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .tab-btn.active { background-color: #cb4335; }
 
         /* टेबल डिज़ाइन */
         .table-container { width: 100%; overflow-x: hidden; }
-        table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 10px; }
         th, td { padding: 10px; text-align: center; border-bottom: 1px solid #ddd; font-size: 14px; vertical-align: middle; }
         th { background-color: #1a5276; color: white; }
 
+        /* प्रोडेक्ट चित्र एनीमेशन */
         .img-wrapper { position: relative; display: inline-block; width: 45px; height: 45px; cursor: pointer; }
-        .img-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; pointer-events: none; }
-        .img-wrapper::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; z-index: 10; }
+        .img-wrapper img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            border-radius: 5px; 
+            pointer-events: none; 
+            animation: productFloat 2.5s ease-in-out infinite;
+        }
+
+        @keyframes productFloat {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-4px) scale(1.05); }
+            100% { transform: translateY(0px) scale(1); }
+        }
 
         .price-text {
             color: green;
@@ -309,29 +279,37 @@
             margin-bottom: 5px;
         }
 
+        /* ब्लू ऐड टू CART बटन - सफेद टेक्स्ट और fa fa आइकन */
         .add-to-cart-btn {
-            background-color: #ff9800;
-            color: white;
+            background-color: #0056b3;
+            color: #ffffff;
             border: none;
-            padding: 4px 8px;
+            padding: 6px 12px;
             border-radius: 3px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .add-to-cart-btn i {
+            color: #ffffff;
         }
 
         /* निर्देश सेक्शन */
         .instructions-section {
             margin-top: 25px;
             padding: 15px;
-            background: #eef2f5;
+            background: #f8f9fa;
             border-left: 5px solid #cb4335;
             border-radius: 4px;
         }
         .instructions-section h3 { margin-top: 0; font-size: 16px; color: #cb4335; text-align: left; }
         .instructions-section ul { text-align: left; padding-left: 20px; font-size: 13px; color: #333; line-height: 1.6; margin-bottom: 0; }
 
-        /* सभी पॉप-अप (Modals) डिज़ाइन */
+        /* पॉप-अप (Modals) डिज़ाइन */
         .modal {
             display: none; position: fixed; z-index: 10000; left: 0; top: 0;
             width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); 
@@ -369,7 +347,6 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Error/Limit Reached Anim */
         .cross-anim {
             font-size: 50px;
             animation: bounceIn 0.6s cubic-bezier(0.25, 1, 0.5, 1);
@@ -387,61 +364,75 @@
 </head>
 <body oncopy="return false" oncut="return false" onpaste="return false">
 
-    <!-- 1. Preloader -->
     <div id="preloader">
         <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTv81faWYq0op6iOt8tG8DQRLqn5D_wzU46SetD1GL1djprUReqRXfkQntuBknegX7Ashvn6yor_vOBdBdFFJQjXLG5j0P9-iNNa5_andy6QOWKQDpkRykGe4HJJI4W0usWURSp_Qu7fhOhTf4_sG5eQmvuMSOhXYO5VSMf24vpts08VrYF2wxGfdiywt0/s1747/A2251884-D132-4355-9AF9-C5B701E7C445.png" alt="Loading..." class="preloader-logo">
     </div>
 
-    <!-- 2. Sliding Icon Animation -->
+    <!-- 6 इमेज स्लाइड्स वाला स्लाइडर स्क्रीन -->
     <div id="slide-transition">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" class="slide-icon" alt="Slide Icon">
+        <div class="slider-wrapper">
+            <!-- स्लाइड 1 -->
+            <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/139467/sierra-ev-exterior-right-front-three-quarter-16.webp?isig=0&q=80" class="slide-img active" alt="Slide 1">
+            <!-- स्लाइड 2 -->
+            <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/212003/xev9s-exterior-right-front-three-quarter-11.png?isig=0&q=80" class="slide-img" alt="Slide 2">
+            <!-- स्लाइड 3 -->
+            <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/141867/nexon-exterior-right-front-three-quarter-79.png?isig=0&q=80" class="slide-img" alt="Slide 3">
+            <!-- स्लाइड 4 -->
+            <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-n160-single-channel-single-seat1782297621684.jpg?q=80" class="slide-img" alt="Slide 4">
+            <!-- स्लाइड 5 -->
+            <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/honda-activa-6g-standard1782118367235.jpg?q=80" class="slide-img" alt="Slide 5">
+            <!-- स्लाइड 6 -->
+            <img src="https://png.pngtree.com/png-vector/20231116/ourmid/pngtree-assortment-of-grocery-items-arranged-on-png-image_10536689.png" class="slide-img" alt="Slide 6">
+        </div>
     </div>
 
-    <!-- 3. Main Dashboard Content -->
     <div id="main-content">
         
-        <!-- Profile Section -->
+        <div class="top-logo-bar">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/Armed_forces_logo.png" alt="Left Logo" class="top-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Ministry_of_Defence.png" alt="Right Logo" class="top-logo">
+        </div>
+
         <div class="profile-section">
-            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAxc_XC5ofvdcanIPc9yHhEgGoRgkyBaDu_OCqE42RXSFLTlQZTKNRsWLdQLROR8kxYhdk4qjUI3wMiDLePZ_w1sp4ViXxYTiAgcy8r69kA6k7MUOau_tPbnqR1kvTE-XMuD0kWehwrhfVWiG1a3cuINvBjgbM1KPGCRqBuowG5zjZMBbYzpHRoYo1aG8/s2048/OFFICER.jpeg" alt="Profile" class="profile-img">
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0J6025vTzfz7ZZU7QTtom718uCPFlDC51paXC5XmunK1RU_g9auWnNdpuIcvHBpmo-0eRCJTOhF-78jNxrJ7ZTk6HVbalLXcTEPvZwjx53JEF44OJRvwLZ6c4KeYbl8J4xFycohXFq4Zum61Ivn_HsyVL4Mo3yCVNHOARqDx9K4ezXrhK4V3r_sdRIAg/s1208/2FC59BDC-5D98-47FC-9982-51549262B6BE.jpeg" alt="Profile" class="profile-img">
             <div class="profile-info">
                 <div class="profile-name">
                     Capt Manish Chaudhary 
-                    <button id="goToCartBtn" class="go-to-cart-btn" style="display: none;" onclick="openCart()">Go To Cart</button>
+                    <button id="goToCartBtn" class="go-to-cart-btn" style="display: none;" onclick="openCart()">
+                         Go to Cart <i class="fa fa-shopping-cart"></i>
+                    </button>
                 </div>
                 <div class="profile-role">Staff Officer Grade II (OPS)</div>
-                <div class="profile-id">GA74890931589082228</div>
+                <div class="profile-id">GA05092445831275T00</div>
             </div>
         </div>
 
         <div class="header-section">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" alt="Mitra Icon" class="mitra-icon">
-            <div class="header-title">OFFICER CANTEEN FACILITIES</div>
-            <div class="header-subtitle">URC HQ 1 CROPS</div>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhQ8gyGHE90pYpSPi0xBXo19t9W_kmD5LQxUTYZdHm8oCAdRp9hyphenhyphenjdMksTMqmFle7y9qttTk5bUC4jyPLEVRvS_BJ4QHNDlItws5wConEH8A59nJp99HuL_3hlrOe-VUoQNEYh5QUxwTnu9U9VhuOJFu5JzL7gGHoHTBz-S7suBxB3JjtyQgWIG9aIYU0hN/s1100/CANTEEN%20-%207.jpeg" alt="Mitra Icon" class="mitra-icon">
         </div>
 
-        <!-- Full Width Header Cover -->
-        <header class="header-cover">
-            <div class="left">
-                <img src="https://png.pngtree.com/png-clipart/20241121/original/pngtree-supermarket-shopping-basket-png-image_17283317.png" alt="Logo">
-            </div>
-            <div class="right">
-                <h1>CANTEEN STORE DEPARTMENT</h1>
-                <p>URC HQ 1 CORPS</p>
-            </div>
-        </header>
+        <header class="header-cover"></header>
 
         <div class="inner-content">
             <p style="text-align: left; padding: 0 5px;"> सभी कमीशन्ड अधिकारियों को कैंटीन में उपलब्ध समस्त ग्रोसरी तथा मदिरा एवं तंबाकू उत्पादों पर 80% की विशेष छूट प्रदान की जाती है।
-            JCO, NCO एवं अग्निवीर के लिए पूर्व निर्धारित दरें एवं छूट पूर्ववत प्रभावी रहेंगी। </p>
+            JCOs, NCOs, ORs एवं AV के लिए पूर्व निर्धारित दरें एवं छूट पूर्ववत प्रभावी रहेंगी। </p>
             <br/>
             <strong><p style="text-align: left; padding: 0 5px;">SPECIAL DISCOUNT THIS PRODUCTS</p></strong>
 
-            <!-- 4 Sections Tabs -->
-            <div class="category-tabs">
+            <!-- Main Categories -->
+            <div class="category-tabs" id="main-tabs">
                 <button id="btn-groceries" class="tab-btn" onclick="filterCategory('groceries', 'btn-groceries')">Groceries</button>
                 <button id="btn-liquor" class="tab-btn" onclick="filterCategory('liquor', 'btn-liquor')">Liquor</button>
                 <button id="btn-tobacco" class="tab-btn" onclick="filterCategory('tobacco', 'btn-tobacco')">Tobacco</button>
-                <button id="btn-officer" class="tab-btn" onclick="filterCategory('officer', 'btn-officer')">Officer Facility</button>
+                <button id="btn-officer" class="tab-btn" onclick="filterCategory('officer', 'btn-officer')">Cloths & Boots</button>
+                <button id="btn-electric" class="tab-btn" onclick="filterCategory('electric', 'btn-electric')">Electric Products</button>
+                <button id="btn-vehicles" class="tab-btn" onclick="filterCategory('vehicles', 'btn-vehicles')">AFD Vehicles</button>
+            </div>
+
+            <!-- Sub Categories for Vehicles (Cars & Bikes) -->
+            <div class="category-tabs" id="vehicle-tabs" style="display: none; margin-top: -10px; margin-bottom: 15px;">
+                <button id="btn-cars" class="tab-btn" onclick="filterCategory('cars', 'btn-cars', true)">Cars</button>
+                <button id="btn-bikes" class="tab-btn" onclick="filterCategory('bikes', 'btn-bikes', true)">Bikes</button>
             </div>
 
             <div class="table-container">
@@ -474,7 +465,6 @@
         </div>
     </div>
 
-    <!-- Image Modal -->
     <div id="imageModal" class="modal">
         <div class="modal-content-wrapper">
             <span class="close" onclick="closeModal('imageModal')">&times;</span>
@@ -482,7 +472,6 @@
         </div>
     </div>
 
-    <!-- Cart Modal -->
     <div id="cartModal" class="modal">
         <div class="cart-modal-content">
             <span class="close" onclick="closeModal('cartModal')">&times;</span>
@@ -493,7 +482,6 @@
         </div>
     </div>
 
-    <!-- Loading Modal -->
     <div id="loadingModal" class="modal">
         <div class="loading-modal-content">
             <div class="loader"></div>
@@ -501,7 +489,6 @@
         </div>
     </div>
 
-    <!-- Error/Limit Modal -->
     <div id="errorModal" class="modal">
         <div class="error-modal-content">
             <span class="close" onclick="closeModal('errorModal')">&times;</span>
@@ -519,25 +506,38 @@
             }
         });
 
-        // प्रीलोडर और स्लाइडिंग एनिमेशन लॉजिक
+        // प्रीलोडर और स्लाइडिंग एनीमेशन लॉजिक (धीमा और छोटा स्लाइडर)
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.style.opacity = '0';
                 setTimeout(() => {
                     preloader.style.display = 'none';
-                    // प्रीलोडर खत्म, अब स्लाइड एनिमेशन दिखाएं
+                    
                     const slideScreen = document.getElementById('slide-transition');
                     slideScreen.style.display = 'flex';
                     
-                    // 3 सेकंड (स्लाइड एनीमेशन टाइम) के बाद डैशबोर्ड खोलें
+                    // 6 इमेजेस को बारी-बारी से चेंज करने का लॉजिक (अब हर 800ms पर ताकि धीमे आए)
+                    const slides = document.querySelectorAll('.slide-img');
+                    let currentSlide = 0;
+                    
+                    const slideInterval = setInterval(() => {
+                        slides[currentSlide].classList.remove('active');
+                        currentSlide = (currentSlide + 1) % slides.length;
+                        slides[currentSlide].classList.add('active');
+                    }, 800);
+                    
+                    // 5 सेकंड के बाद स्लाइडर स्क्रीन बंद होकर मेन कंटेंट चालू होगा (ताकि सभी चित्र आराम से दिख सकें)
                     setTimeout(() => {
+                        clearInterval(slideInterval);
                         slideScreen.style.display = 'none';
                         document.getElementById('main-content').style.display = 'block';
-                    }, 3000);
+                        
+                        filterCategory('groceries', 'btn-groceries');
+                    }, 5000);
 
-                }, 500); 
-            }, 5000); // 5000 मिलीसेकंड = 5 सेकंड प्रीलोडर
+                }, 400); 
+            }, 1500); 
         });
 
         const items = [
@@ -562,7 +562,12 @@
             
             // Tobacco
             { id: 18, category: "tobacco", name: "MARLBORO FILTER BLACK", price: "70", img: "https://royalpuff.in/wp-content/uploads/2025/04/MARLBORO-FILTER-BLACK-1.jpg" },
+
+
             { id: 19, category: "tobacco", name: "Marlboro Advance Compact", price: "30", img: "https://royalpuff.in/wp-content/uploads/2025/03/MARLBORO-COMPACT.jpg" },
+
+
+
             { id: 20, category: "tobacco", name: "Gold Flake Small (10 Pieces)", price: "60", img: "https://www.topintownstore.com/wp-content/uploads/2024/11/gold-flake-small.webp" },
             { id: 21, category: "tobacco", name: "Gold Flake Kings (10 Pieces)", price: "150", img: "https://www.topintownstore.com/wp-content/uploads/img_9413-1536x1536.jpeg" },
             { id: 22, category: "tobacco", name: "Classic Ice Burst (10 Pieces)", price: "110", img: "https://www.topintownstore.com/wp-content/uploads/img_1178-981x1536.jpeg" },
@@ -586,25 +591,193 @@
             { id: 38, category: "liquor", name: "Royal Challenge 750 ml", price: "190", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01709.webp" },
             { id: 39, category: "liquor", name: "Mc Dowells No 1", price: "340", img: "https://static.livcheers.com/static/content/images/liquor/LCIN01396.webp" },
 
-            // Officer Facility 
-            { id: 40, category: "officer", name: "Officer Smart Card Cover", price: "50", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
-            { id: 41, category: "officer", name: "Premium Leather Belt", price: "450", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
-            { id: 42, category: "officer", name: "Peak Cap Cover", price: "120", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
-            { id: 43, category: "officer", name: "Officer Oxford Shoes Black", price: "1200", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
-            { id: 44, category: "officer", name: "Mess Dress Fabric", price: "850", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
-            { id: 45, category: "officer", name: "Sam Browne Belt", price: "950", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
-            { id: 46, category: "officer", name: "Regimental Tie", price: "150", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
-            { id: 47, category: "officer", name: "White PT Shoes", price: "450", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
-            { id: 48, category: "officer", name: "Premium Track Suit", price: "1100", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" },
-            { id: 49, category: "officer", name: "VIP Briefcase", price: "2500", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/I_Corps%2C_Indian_Army.svg/1280px-I_Corps%2C_Indian_Army.svg.png" }
+            // Cloths & Boots
+            { id: 40, category: "officer", name: "Allen Cooper 1095 Boots for Men", price: "1600", img: "https://rastogiarmystore.in/wp-content/uploads/2025/05/SA.SA32.242343_1742966584330.webp" },
+            { id: 41, category: "officer", name: "Liberty Jungle Shoes Warrior", price: "1070", img: "https://rastogiarmystore.in/wp-content/uploads/2025/05/original-imagtez9kmbejmuf.webp" },
+            { id: 42, category: "officer", name: "SCORPION II 8.0 SZ Tactical Boots for Men", price: "6500", img: "https://rastogiarmystore.in/wp-content/uploads/2024/11/M801780-062-002-SCORPION-II-8.0-SZ-OLIVE-GREEN_E-commerce-medial-2_1800x1800.webp" },
+            { id: 43, category: "officer", name: "Army Dental Corps Balacalava", price: "150", img: "https://rastogiarmystore.in/wp-content/uploads/2025/11/Untitled-design-2025-11-09T000351.699.png" },
+            { id: 44, category: "officer", name: "EME Balacalava", price: "150", img: "https://rastogiarmystore.in/wp-content/uploads/2025/11/Untitled-design-2025-11-09T000836.871.png" },
+            { id: 45, category: "officer", name: "Sena police", price: "150", img: "https://rastogiarmystore.in/wp-content/uploads/2025/11/Untitled-design-2025-11-08T235856.251.png" },
+            { id: 46, category: "officer", name: "Shivalik Indoor and Outdoor Sleeping Bag", price: "2030", img: "https://rastogiarmystore.in/wp-content/uploads/2025/06/Screenshot-2025-06-11-170258.png" },
+            { id: 47, category: "officer", name: "Tripole Colonel 85 Litre Rucksack Olive Green", price: "2500", img: "https://rastogiarmystore.in/wp-content/uploads/2025/06/Screenshot-2025-06-10-125258.png" },
+            { id: 48, category: "officer", name: "Mens Army Track Suit", price: "1100", img: "https://rastogiarmystore.in/wp-content/uploads/2025/04/ghg-19.png" },
+            { id: 49, category: "officer", name: "Tactical Softshell Jacket with Shoulder Flaps", price: "2000", img: "https://oliveplanet.in/cdn/shop/products/camouflage-softshell-jacket-with-shoulder-flaps-woodland-camo_1280x.jpg?v=1644909627" },
+            { id: 50, category: "officer", name: "Mens Army Jacket", price: "1200", img: "https://m.media-amazon.com/images/I/41afhDwoMjL._AC_UY1100_.jpg" },
+            { id: 51, category: "officer", name: "Mens Army New Pattern Jacket", price: "2100", img: "https://static.pib.gov.in/WriteReadData/userfiles/image/JAcketEJPC.png" },
+            { id: 52, category: "officer", name: "Adidas ESSENTIALS 3-STRIPES TRACK SUIT", price: "2300", img: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/410f54cb252c4ccdb563ac56005cf018_9366/Essentials_3-Stripes_Track_Suit_Black_GK9651_01_laydown.jpg" },
+            { id: 53, category: "officer", name: "ADICOLOR CLASSICS 3-STRIPES TEE", price: "1050", img: "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/970d213c54764c0f9a2daf150099f6a7_9366/Adicolor_Classics_3-Stripes_Tee_White_IA4846_01_laydown.jpg" },
+            { id: 54, category: "officer", name: "Mens ArmyPT Dress", price: "600", img: "https://5.imimg.com/data5/IOS/Default/2025/6/520970366/VX/UP/CE/161656954/product-jpeg-500x500.jpeg" },
+            { id: 55, category: "officer", name: "Army New Pattern Fabric 3 m", price: "700", img: "https://5.imimg.com/data5/SELLER/Default/2024/6/430702707/HC/BO/WQ/78127296/indian-army-uniform-fabrics-500x500.jpg" },
+            { id: 56, category: "officer", name: "Mens Army Camouflage Full Uniform", price: "2000", img: "https://oliveplanet.in/cdn/shop/products/authorized-pattern-indian-army-combat-uniform-shirt_960x960.jpg?v=1656923776" },
+            { id: 57, category: "officer", name: "Mens ASC tracksuit", price: "1100", img: "https://arjunarmystore.com/cdn/shop/files/DA390CBE-43EE-4B54-AA74-C99DDB4F2008.png?v=1736861154" },
+            { id: 58, category: "officer", name: "IA Polo Tshirt", price: "400", img: "https://warriorworld.in/cdn/shop/files/P3021-Black.jpg?v=1755498340&width=1920" },
+            { id: 59, category: "officer", name: "Tactical Softshell Military Jacket", price: "3000", img: "https://oliveplanet.in/cdn/shop/files/tactical_softshell_jacket_olive_green_with_shoulder_flap_name_tab_1280x.jpg?v=1702017307" },
+
+            // Electric Products 
+            { id: 60, category: "electric", name: "VOLTAS 183FS PRISM Convertible 1.5 Ton ", price: "28,000", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Air%20Conditioner/Images/321309_0_zwbUzGRMhJ.png?updatedAt=1776931287114&tr=w-640" },
+
+
+            { id: 61, category: "electric", name: "VOLTAS 243INV VECTRA ELEGANT Convertible 2 Ton", price: "31,543", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Air%20Conditioner/Images/321304_0_ydjZKl_VJ.png?updatedAt=1775826848452&tr=w-640" },
+
+
+            { id: 62, category: "electric", name: "LG 650 Litres 3 Star Frost Free Side by Side Refrigerator", price: "77,455", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Refrigerator/Images/313834_4_0wYp0P31X.png?updatedAt=1768228779870&tr=w-640" },
+
+
+            { id: 63, category: "electric", name: "Samsung RR20 183 Litres 3 Star Direct Cool Single Door Refrigerator ", price: "12,433", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Refrigerator/Images/321134%20_0_Prr7Dwb6u.png?updatedAt=1775440085860&tr=w-640" },
+
+
+            { id: 64, category: "electric", name: "SAMSUNG DUE70 109 cm (43 inch) 1 Star 4K Ultra HD LED", price: "17,900", img: "https://media-ik.croma.com/Croma%20Assets/Entertainment/Television/Images/306175_0_co8vok.png?tr=w-640" },
+
+
+            { id: 65, category: "electric", name: "LG evo AI 140 cm (55 inch) 3 Star QNED Mini LED 4K Ultra HD Smart webOS TV", price: "4500", img: "https://media-ik.croma.com/Croma%20Assets/Entertainment/Television/Images/322602_0_dU2HtBCpT.png?updatedAt=1777280896771&tr=w-640" },
+
+
+            { id: 66, category: "electric", name: "Panasonic 8 kg 5 Star Wi-Fi Fully Automatic Front Load Washing Machine", price: "17,700", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Washers%20and%20Dryers/Images/308813_hyhv2p.png?tr=w-640" },
+
+
+            { id: 67, category: "electric", name: "LG 12/7 kg Wi-Fi Inverter Fully Automatic Front Load Washer Dryer", price: "48,300", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Washers%20and%20Dryers/Images/316279_0_sbhvZIRZK.png?updatedAt=1766428506135&tr=w-640" },
+
+
+            { id: 68, category: "electric", name: "LG 21L Convection Microwave Oven with 151 ", price: "10,200", img: "https://media-ik.croma.com/Croma%20Assets/Small%20Appliances/Microwave%20or%20OTG/Images/304913_0_jmbogz.png?tr=w-640" },
+
+
+            { id: 69, category: "electric", name: "Symphony Sumo 75 XL 75 Litres Desert Air Cooler ", price: "9,500", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Air%20Cooler/Images/223253_0_bxsm2j.png?tr=w-640" },
+
+
+
+            // AFD Cars
+            { id: 70, category: "cars", name: "Tata Sierra EV  CSD", price: "16.79 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/139467/sierra-ev-exterior-right-front-three-quarter-16.webp?isig=0&q=80" },
+
+
+            { id: 71, category: "cars", name: "Tata Sierra CSD", price: "14.44 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/193017/sierra-exterior-right-front-three-quarter-61.png?isig=0&q=80" },
+
+
+            { id: 72, category: "cars", name: "Tata Harrier CSD", price: "15 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/139139/harrier-exterior-right-front-three-quarter-7.png?isig=0&q=80" },
+
+
+            { id: 73, category: "cars", name: "Tata Safari CSD", price: "17.44 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/138895/safari-exterior-right-front-three-quarter-40.png?isig=0&q=80" },
+
+
+            { id: 74, category: "cars", name: "Maruti Suzuki Fronx CSD", price: "7.88 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.png?isig=0&q=80" },
+
+
+            { id: 75, category: "cars", name: "Maruti Suzuki Grand Vitara CSD", price: "10.67 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/123185/grand-vitara-exterior-right-front-three-quarter-5.png?isig=0&q=80" },
+
+
+            { id: 76, category: "cars", name: "Maruti Suzuki Wagon R CSD", price: "3.09 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/112947/wagon-r-exterior-right-front-three-quarter-6.png?isig=0&q=80" },
+
+
+            { id: 77, category: "cars", name: "Toyota Fortuner CSD", price: "29 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/44709/fortuner-exterior-right-front-three-quarter-7.jpeg?isig=0&q=80" },
+
+
+            { id: 78, category: "cars", name: "Toyota Innova Crysta CSD", price: "18.33 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/222736/innova-crysta-2026-exterior-right-front-three-quarter.png?isig=0&q=80" },
+
+
+{ id: 78, category: "cars", name: "Mahindra Thar Roxx CSD", price: "9.55 Lakh Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/124839/thar-roxx-exterior-right-front-three-quarter-2.png?isig=0&q=80" },
+
+
+{ id: 78, category: "cars", name: "Mahindra Scorpio CSD", price: "10.30 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/128413/scorpio-exterior-right-front-three-quarter-2.png?isig=0&q=80" },
+
+
+
+{ id: 78, category: "cars", name: "Mahindra Bolero CSD", price: "7.66 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/210987/bolero-exterior-right-front-three-quarter-3.png?isig=0&q=80" },
+
+
+
+{ id: 78, category: "cars", name: "Toyota Fortuner Legender CSD", price: "32.33 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/137767/fortuner-legender-exterior-right-rear-three-quarter.png?isig=0&q=80" },
+
+
+
+
+            { id: 79, category: "cars", name: "Mahindra Scorpio N CSD", price: "12.77 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/40432/scorpio-n-exterior-right-front-three-quarter-4.png?isig=0&q=80" },
+
+
+
+            // AFD Bikes
+            { id: 80, category: "bikes", name: "Royal Enfield Bullet 350", price: "1,04,124,", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/royalenfield-bullet-base1740992337934.jpg?q=80" },
+
+
+
+
+            { id: 81, category: "bikes", name: "Royal Enfield Classic 350", price: "1,10274", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--redditch1738919737719.jpg?q=80" },
+
+
+
+
+            { id: 82, category: "bikes", name: "Royal Enfield Guerrilla 450", price: "1,97,085", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/royalenfield-guerrilla-450-dash-twilight-blue1774607504468.jpg?q=80" },
+
+
+
+            { id: 83, category: "bikes", name: "Royal Enfield Himalayan 450", price: "2,60,278", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/royalenfield-himalayan-base1770645122967.jpg?q=80" },
+
+
+            { id: 84, category: "bikes", name: "Honda Activa", price: "70,760", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/honda-activa-6g-standard1782118367235.jpg?q=80" },
+
+
+            { id: 85, category: "bikes", name: "Honda Activa 125", price: "135000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--25-year-anniversary-edition1754995553732.jpg?q=80" },
+
+
+            { id: 86, category: "bikes", name: "Bajaj Pulsar 220F", price: "90,000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-220f-standard1781771494991.jpg?q=80" },
+
+
+            { id: 87, category: "bikes", name: "Bajaj Pulsar N160", price: "93,000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-n160-single-channel-single-seat1782297621684.jpg?q=80" },
+
+
+            { id: 88, category: "bikes", name: "Bajaj Pulsar NS200", price: "1,23,905", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-ns-dual-channel-usd1774963088647.jpg?q=80" },
+
+{ id: 88, category: "bikes", name: "Yamaha R15 V4", price: "1,32,545", img: "https://imgd.aeplcdn.com/664x374/n/bw/models/colors/yamaha-select-model-metallic-red-1704802630538.png?q=80" },
+
+
+{ id: 88, category: "bikes", name: "TVS Ronin", price: "1,00,000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/tvs-ronin-ss-single-channel-abs-lightning-black1739873178482.jpg?q=80" },
+
+{ id: 88, category: "bikes", name: "TVS Apache RTR 160", price: "97,987", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/tvs-apache-160-rm-drum-black-edition1732629216165.jpg?q=80" },
+
+{ id: 88, category: "bikes", name: "TVS Apache RR 310", price: "2,45,769", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--red-without-quickshifter-obd-2b1744894903832.jpg?q=80" },
+
+{ id: 88, category: "bikes", name: "TVS Jupiter 125", price: "97,678", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/tvs-jupiter-125-drum-alloy-wheel1781086869768.jpg?q=80" },
+
+{ id: 88, category: "bikes", name: "TVS iQube EV", price: "99,769", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--22-kwh1747293190144.jpg?q=80" },
+
+{ id: 88, category: "bikes", name: "Hero Splendor Plus", price: "78,678", img: "https://imgd.aeplcdn.com/1056x594/n/7eb4kjb_1956482.png?q=80" },
+
+
+{ id: 88, category: "bikes", name: "Hero Karizma XMR", price: "1,10,666", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--top1744051710255.jpg?q=80" },
+
+
+{ id: 88, category: "bikes", name: "Ather Rizta EV", price: "1,03,408", img: "https://imgd.aeplcdn.com/664x374/n/bw/models/colors/ather-select-model-deccan-grey-1712392628151.png?q=80" },
+
+{ id: 88, category: "bikes", name: "Suzuki Access 125", price: "75,644", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/suzuki-access-125-standard1782208080044.jpg?q=80" },
+
+{ id: 88, category: "bikes", name: "Suzuki Burgman Street 125", price: "98,511", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/suzuki-burgman-street-125-ride-connect-edition1775210783860.jpg?q=80" },
+
+
+            { id: 89, category: "bikes", name: "Bajaj Pulsar 150", price: "99,000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-150-single-disc-20261771570201788.jpg?q=80" }
         ];
 
         let cartData = [];
 
-        // टेबल रेंडरर
-        function filterCategory(category, btnId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(btnId).classList.add('active');
+        function filterCategory(category, btnId, isSubTab = false) {
+            // Main tabs active state
+            if (!isSubTab) {
+                document.querySelectorAll('#main-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(btnId).classList.add('active');
+                
+                // Show/hide sub-tabs based on main tab click
+                const vehicleTabs = document.getElementById('vehicle-tabs');
+                if (category === 'vehicles') {
+                    vehicleTabs.style.display = 'flex';
+                    // Auto-load 'Cars' when 'Vehicles' is clicked
+                    filterCategory('cars', 'btn-cars', true);
+                    return;
+                } else {
+                    vehicleTabs.style.display = 'none';
+                }
+            } 
+            // Sub tabs active state
+            else {
+                document.querySelectorAll('#vehicle-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById(btnId).classList.add('active');
+            }
 
             const tbody = document.getElementById("canteenTableBody");
             tbody.innerHTML = ""; 
@@ -625,11 +798,12 @@
                 tdName.style.fontWeight = "bold";
                 tdName.innerText = item.name;
                 
-                // ग्रीन प्राइस & Add To Cart Button
                 const tdAction = document.createElement("td");
                 tdAction.innerHTML = `
                     <span class="price-text">₹${item.price}</span>
-                    <button class="add-to-cart-btn" onclick="addToCart(${item.id})">Add To Cart</button>
+                    <button class="add-to-cart-btn" onclick="addToCart(${item.id})">
+                        ADD <i class="fa fa-shopping-cart"></i>
+                    </button>
                 `;
 
                 tr.appendChild(tdImg);
@@ -639,19 +813,10 @@
             });
         }
 
-        window.onload = function() {
-            filterCategory('groceries', 'btn-groceries');
-        };
-
-        // Cart Logic
         function addToCart(id) {
             const item = items.find(i => i.id === id);
             cartData.push(item);
-            document.getElementById("goToCartBtn").style.display = "block";
-            // छोटा एनिमेशन इफ़ेक्ट के लिए
-            const btn = document.getElementById("goToCartBtn");
-            btn.style.animation = 'none';
-            setTimeout(() => btn.style.animation = 'popIn 0.3s ease-out', 10);
+            document.getElementById("goToCartBtn").style.display = "flex";
         }
 
         function openCart() {
@@ -679,14 +844,12 @@
             document.getElementById("cartModal").style.display = "none";
             document.getElementById("loadingModal").style.display = "flex";
             
-            // 4 सेकंड लोडिंग
             setTimeout(() => {
                 document.getElementById("loadingModal").style.display = "none";
                 document.getElementById("errorModal").style.display = "flex";
             }, 4000);
         }
 
-        // Modals Management
         function openImageModal(src) {
             document.getElementById("modalImg").src = src;
             document.getElementById("imageModal").style.display = "flex";
