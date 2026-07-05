@@ -42,8 +42,8 @@
         }
 
         .preloader-logo {
-            width: 200px;
-            height: 90px;
+            width: 250px;
+            height: 300px;
             pointer-events: none;
             animation: dropAndZoom 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
         }
@@ -77,16 +77,16 @@
 
         .slide-img {
             position: absolute;
-            max-width: 60%; /* पहले 90% था, अब छोटा कर दिया गया है */
-            max-height: 35vh; /* हाइट भी छोटी कर दी गई है */
-            object-fit: contain; /* चित्र हमेशा अपनी सही शेप में सेट रहेगा */
+            max-width: 60%; 
+            max-height: 35vh; 
+            object-fit: contain; 
             display: none;
             border-radius: 8px;
         }
 
         .slide-img.active {
             display: block;
-            animation: slideInRight 0.6s ease-out forwards; /* थोड़ा स्मूथ आने के लिए 0.6s किया गया */
+            animation: slideInRight 0.6s ease-out forwards; 
         }
 
         @keyframes slideInRight {
@@ -183,6 +183,26 @@
         
         .go-to-cart-btn i {
             color: #ffffff;
+        }
+
+        /* Notification Badge Animation */
+        .noti-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 5px;
+            font-size: 10px;
+            font-weight: bold;
+            animation: blinkAlert 1s infinite;
+        }
+
+        @keyframes blinkAlert {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         /* मित्रा आइकन सेटिंग्स (नो शैडो) */
@@ -365,23 +385,16 @@
 <body oncopy="return false" oncut="return false" onpaste="return false">
 
     <div id="preloader">
-        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTv81faWYq0op6iOt8tG8DQRLqn5D_wzU46SetD1GL1djprUReqRXfkQntuBknegX7Ashvn6yor_vOBdBdFFJQjXLG5j0P9-iNNa5_andy6QOWKQDpkRykGe4HJJI4W0usWURSp_Qu7fhOhTf4_sG5eQmvuMSOhXYO5VSMf24vpts08VrYF2wxGfdiywt0/s1747/A2251884-D132-4355-9AF9-C5B701E7C445.png" alt="Loading..." class="preloader-logo">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhofhw-HDqrStYmqoS58hpFS193xBwYflTup0SjFxL7Qzx4da1E6As1DEIuP7g5udtjFcMdAbDkwgOkV1uVmIoeWFtjJFopmj1bbMZ4xfnrt2KLXSCHUo5ZslgaQL4Ns3x-Z00pE1VCaDLui785oWvaoFYXjKmjXF5Wk6fan4B3_CsDfXPfXY3xSm08ecT8/s2245/48DF0B6D-E261-4832-A4AD-905AC11BFEFB.png" alt="Loading..." class="preloader-logo">
     </div>
 
-    <!-- 6 इमेज स्लाइड्स वाला स्लाइडर स्क्रीन -->
     <div id="slide-transition">
         <div class="slider-wrapper">
-            <!-- स्लाइड 1 -->
             <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/139467/sierra-ev-exterior-right-front-three-quarter-16.webp?isig=0&q=80" class="slide-img active" alt="Slide 1">
-            <!-- स्लाइड 2 -->
             <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/212003/xev9s-exterior-right-front-three-quarter-11.png?isig=0&q=80" class="slide-img" alt="Slide 2">
-            <!-- स्लाइड 3 -->
             <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/141867/nexon-exterior-right-front-three-quarter-79.png?isig=0&q=80" class="slide-img" alt="Slide 3">
-            <!-- स्लाइड 4 -->
             <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-n160-single-channel-single-seat1782297621684.jpg?q=80" class="slide-img" alt="Slide 4">
-            <!-- स्लाइड 5 -->
             <img src="https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/honda-activa-6g-standard1782118367235.jpg?q=80" class="slide-img" alt="Slide 5">
-            <!-- स्लाइड 6 -->
             <img src="https://png.pngtree.com/png-vector/20231116/ourmid/pngtree-assortment-of-grocery-items-arranged-on-png-image_10536689.png" class="slide-img" alt="Slide 6">
         </div>
     </div>
@@ -398,9 +411,15 @@
             <div class="profile-info">
                 <div class="profile-name">
                     Capt Manish Chaudhary 
-                    <button id="goToCartBtn" class="go-to-cart-btn" style="display: none;" onclick="openCart()">
-                         Go to Cart <i class="fa fa-shopping-cart"></i>
-                    </button>
+                    <div style="display: flex; flex-direction: column; gap: 5px; align-items: flex-end;">
+                        <button id="goToCartBtn" class="go-to-cart-btn" style="display: none;" onclick="openCart()">
+                             Go to Cart <i class="fa fa-shopping-cart"></i>
+                        </button>
+                        <button id="notiBtn" class="go-to-cart-btn" style="background-color: #ff9800; position: relative;" onclick="openNotiList()">
+                             Notifications <i class="fa fa-bell"></i>
+                             <span class="noti-badge">1</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="profile-role">Staff Officer Grade II (OPS)</div>
                 <div class="profile-id">GA05092445831275T00</div>
@@ -419,7 +438,6 @@
             <br/>
             <strong><p style="text-align: left; padding: 0 5px;">SPECIAL DISCOUNT THIS PRODUCTS</p></strong>
 
-            <!-- Main Categories -->
             <div class="category-tabs" id="main-tabs">
                 <button id="btn-groceries" class="tab-btn" onclick="filterCategory('groceries', 'btn-groceries')">Groceries</button>
                 <button id="btn-liquor" class="tab-btn" onclick="filterCategory('liquor', 'btn-liquor')">Liquor</button>
@@ -429,7 +447,6 @@
                 <button id="btn-vehicles" class="tab-btn" onclick="filterCategory('vehicles', 'btn-vehicles')">AFD Vehicles</button>
             </div>
 
-            <!-- Sub Categories for Vehicles (Cars & Bikes) -->
             <div class="category-tabs" id="vehicle-tabs" style="display: none; margin-top: -10px; margin-bottom: 15px;">
                 <button id="btn-cars" class="tab-btn" onclick="filterCategory('cars', 'btn-cars', true)">Cars</button>
                 <button id="btn-bikes" class="tab-btn" onclick="filterCategory('bikes', 'btn-bikes', true)">Bikes</button>
@@ -472,6 +489,23 @@
         </div>
     </div>
 
+    <div id="notiListModal" class="modal">
+        <div class="cart-modal-content" style="text-align: left;">
+            <span class="close" onclick="closeModal('notiListModal')">&times;</span>
+            <h2 style="margin-top:0; color:#1a5276; text-align:center;">Notifications</h2>
+            <div style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 14px;">1. Welcome to URC HQ 1 CROPS Portal.</div>
+            <div style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 14px;">2. Your monthly limits have been updated.</div>
+            <div style="padding: 10px; border-bottom: 1px solid #ddd; font-size: 14px;">3. Canteen will remain closed on Tuesdays.</div>
+            <div style="padding: 10px; cursor: pointer; color: #cb4335; font-weight: bold; font-size: 14px;" onclick="showNotiImage()">
+                4. Important Circular
+            </div>
+        </div>
+    </div>
+
+    <div id="notiImageModal" class="modal" onclick="closeModal('notiImageModal')" style="justify-content: center; align-items: center; cursor: pointer;">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhWvl-Oa8GEGPahgxZa3YGzeJ4mxItHyfKtuIGzdyshR5_c8asiwEsSTYj7E8dxtLVaNZe2MFoZ68lN-a6XlIv37mJ6mjEM85QynrnrIsaIeqy8SkoaEXPpz1lRBkAone4FeGmWoBMMSZrx453V09cB4deL49SSEPlhgnADvwrAWK-HRzNbq3r4jm2iwVwR/s2404/67C38C81-C4E4-4DAC-9F50-9389D00AC95F.jpeg" alt="A4 Notification Image" style="width: 90vw; max-width: 500px; aspect-ratio: 1 / 1.414; object-fit: cover; border-radius: 5px; pointer-events: none; margin: auto; display: block;">
+    </div>
+
     <div id="cartModal" class="modal">
         <div class="cart-modal-content">
             <span class="close" onclick="closeModal('cartModal')">&times;</span>
@@ -493,7 +527,8 @@
         <div class="error-modal-content">
             <span class="close" onclick="closeModal('errorModal')">&times;</span>
             <div class="cross-anim">❌</div>
-            <p>YOUR LIMIT IS COMPLETE THIS MONTH.<br><br>NEXT MONTH PURCHASE ALLOWED.</p>
+            <p> Your Monthly Purchase Limit Has Been Completed.<br><br>
+You Will Be Eligible To Purchase Again From Next Month.</p>
         </div>
     </div>
 
@@ -555,19 +590,14 @@
             { id: 11, category: "groceries", name: "Fortune Sugur 5 kg", price: "165", img: "https://m.media-amazon.com/images/I/81zVrBm4jSL.jpg" },
             { id: 12, category: "groceries", name: "Taj Mahal Tea 1 kg", price: "190", img: "https://aapkabazar.co/_next/image?url=https%3A%2F%2Fimage.aapkabazar.co%2Fproduct%2F3239%2F1698385390663.png%3Ftype%3Dwebp%26width%3D600&w=3840&q=75" },
             { id: 13, category: "groceries", name: "Nescafe Classic Pure Coffee Powder 200 g", price: "450", img: "https://images.jdmagicbox.com/quickquotes/images_main/mtc0oda2mti5oq-1748061299-ft1xekc7.jpg" },
-            { id: 14, category: "groceries", name: "English Oven White Bread 700 g", price: "35", img: "https://www.bbassets.com/media/uploads/p/l/251037_14-coca-cola-soft-drink-original-taste.jpg" },
+            { id: 14, category: "groceries", name: "Coca Cola Soft Drink Refreshing 2 l", price: "35", img: "https://www.bbassets.com/media/uploads/p/l/251037_14-coca-cola-soft-drink-original-taste.jpg" },
             { id: 15, category: "groceries", name: "Amul Salted Butter 100 g", price: "30", img: "https://nagabazaar.com/cdn/shop/files/Amul-Pasteurised-Butter-100-g.jpg?v=1747519848&width=1024" },
             { id: 16, category: "groceries", name: "Amul Fresh Paneer", price: "40", img: "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=70,metadata=none,w=1080/da/cms-assets/cms/product/7a1700ee-dd38-49cf-b34e-171ff84ac0e7.png?bg_token=color.background.quaternary" },
             { id: 17, category: "groceries", name: "Fortune Kachi Ghani Mustard Oil 1 l", price: "90", img: "https://www.bbassets.com/media/uploads/p/xl/276764_12-fortune-fortune-premium-kachi-ghani-pure-mustard-oil.jpg" },
             
             // Tobacco
             { id: 18, category: "tobacco", name: "MARLBORO FILTER BLACK", price: "70", img: "https://royalpuff.in/wp-content/uploads/2025/04/MARLBORO-FILTER-BLACK-1.jpg" },
-
-
             { id: 19, category: "tobacco", name: "Marlboro Advance Compact", price: "30", img: "https://royalpuff.in/wp-content/uploads/2025/03/MARLBORO-COMPACT.jpg" },
-
-
-
             { id: 20, category: "tobacco", name: "Gold Flake Small (10 Pieces)", price: "60", img: "https://www.topintownstore.com/wp-content/uploads/2024/11/gold-flake-small.webp" },
             { id: 21, category: "tobacco", name: "Gold Flake Kings (10 Pieces)", price: "150", img: "https://www.topintownstore.com/wp-content/uploads/img_9413-1536x1536.jpeg" },
             { id: 22, category: "tobacco", name: "Classic Ice Burst (10 Pieces)", price: "110", img: "https://www.topintownstore.com/wp-content/uploads/img_1178-981x1536.jpeg" },
@@ -615,142 +645,53 @@
 
             // Electric Products 
             { id: 60, category: "electric", name: "VOLTAS 183FS PRISM Convertible 1.5 Ton ", price: "28,000", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Air%20Conditioner/Images/321309_0_zwbUzGRMhJ.png?updatedAt=1776931287114&tr=w-640" },
-
-
             { id: 61, category: "electric", name: "VOLTAS 243INV VECTRA ELEGANT Convertible 2 Ton", price: "31,543", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Air%20Conditioner/Images/321304_0_ydjZKl_VJ.png?updatedAt=1775826848452&tr=w-640" },
-
-
             { id: 62, category: "electric", name: "LG 650 Litres 3 Star Frost Free Side by Side Refrigerator", price: "77,455", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Refrigerator/Images/313834_4_0wYp0P31X.png?updatedAt=1768228779870&tr=w-640" },
-
-
             { id: 63, category: "electric", name: "Samsung RR20 183 Litres 3 Star Direct Cool Single Door Refrigerator ", price: "12,433", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Refrigerator/Images/321134%20_0_Prr7Dwb6u.png?updatedAt=1775440085860&tr=w-640" },
-
-
             { id: 64, category: "electric", name: "SAMSUNG DUE70 109 cm (43 inch) 1 Star 4K Ultra HD LED", price: "17,900", img: "https://media-ik.croma.com/Croma%20Assets/Entertainment/Television/Images/306175_0_co8vok.png?tr=w-640" },
-
-
             { id: 65, category: "electric", name: "LG evo AI 140 cm (55 inch) 3 Star QNED Mini LED 4K Ultra HD Smart webOS TV", price: "4500", img: "https://media-ik.croma.com/Croma%20Assets/Entertainment/Television/Images/322602_0_dU2HtBCpT.png?updatedAt=1777280896771&tr=w-640" },
-
-
             { id: 66, category: "electric", name: "Panasonic 8 kg 5 Star Wi-Fi Fully Automatic Front Load Washing Machine", price: "17,700", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Washers%20and%20Dryers/Images/308813_hyhv2p.png?tr=w-640" },
-
-
             { id: 67, category: "electric", name: "LG 12/7 kg Wi-Fi Inverter Fully Automatic Front Load Washer Dryer", price: "48,300", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Washers%20and%20Dryers/Images/316279_0_sbhvZIRZK.png?updatedAt=1766428506135&tr=w-640" },
-
-
             { id: 68, category: "electric", name: "LG 21L Convection Microwave Oven with 151 ", price: "10,200", img: "https://media-ik.croma.com/Croma%20Assets/Small%20Appliances/Microwave%20or%20OTG/Images/304913_0_jmbogz.png?tr=w-640" },
-
-
             { id: 69, category: "electric", name: "Symphony Sumo 75 XL 75 Litres Desert Air Cooler ", price: "9,500", img: "https://media-ik.croma.com/Croma%20Assets/Large%20Appliances/Air%20Cooler/Images/223253_0_bxsm2j.png?tr=w-640" },
-
-
 
             // AFD Cars
             { id: 70, category: "cars", name: "Tata Sierra EV  CSD", price: "16.79 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/139467/sierra-ev-exterior-right-front-three-quarter-16.webp?isig=0&q=80" },
-
-
             { id: 71, category: "cars", name: "Tata Sierra CSD", price: "14.44 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/193017/sierra-exterior-right-front-three-quarter-61.png?isig=0&q=80" },
-
-
             { id: 72, category: "cars", name: "Tata Harrier CSD", price: "15 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/139139/harrier-exterior-right-front-three-quarter-7.png?isig=0&q=80" },
-
-
             { id: 73, category: "cars", name: "Tata Safari CSD", price: "17.44 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/138895/safari-exterior-right-front-three-quarter-40.png?isig=0&q=80" },
-
-
             { id: 74, category: "cars", name: "Maruti Suzuki Fronx CSD", price: "7.88 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/130591/fronx-exterior-right-front-three-quarter-109.png?isig=0&q=80" },
-
-
             { id: 75, category: "cars", name: "Maruti Suzuki Grand Vitara CSD", price: "10.67 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/123185/grand-vitara-exterior-right-front-three-quarter-5.png?isig=0&q=80" },
-
-
             { id: 76, category: "cars", name: "Maruti Suzuki Wagon R CSD", price: "3.09 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/112947/wagon-r-exterior-right-front-three-quarter-6.png?isig=0&q=80" },
-
-
             { id: 77, category: "cars", name: "Toyota Fortuner CSD", price: "29 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/44709/fortuner-exterior-right-front-three-quarter-7.jpeg?isig=0&q=80" },
-
-
             { id: 78, category: "cars", name: "Toyota Innova Crysta CSD", price: "18.33 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/222736/innova-crysta-2026-exterior-right-front-three-quarter.png?isig=0&q=80" },
-
-
-{ id: 78, category: "cars", name: "Mahindra Thar Roxx CSD", price: "9.55 Lakh Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/124839/thar-roxx-exterior-right-front-three-quarter-2.png?isig=0&q=80" },
-
-
-{ id: 78, category: "cars", name: "Mahindra Scorpio CSD", price: "10.30 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/128413/scorpio-exterior-right-front-three-quarter-2.png?isig=0&q=80" },
-
-
-
-{ id: 78, category: "cars", name: "Mahindra Bolero CSD", price: "7.66 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/210987/bolero-exterior-right-front-three-quarter-3.png?isig=0&q=80" },
-
-
-
-{ id: 78, category: "cars", name: "Toyota Fortuner Legender CSD", price: "32.33 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/137767/fortuner-legender-exterior-right-rear-three-quarter.png?isig=0&q=80" },
-
-
-
-
+            { id: 78, category: "cars", name: "Mahindra Thar Roxx CSD", price: "9.55 Lakh Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/124839/thar-roxx-exterior-right-front-three-quarter-2.png?isig=0&q=80" },
+            { id: 78, category: "cars", name: "Mahindra Scorpio CSD", price: "10.30 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/128413/scorpio-exterior-right-front-three-quarter-2.png?isig=0&q=80" },
+            { id: 78, category: "cars", name: "Mahindra Bolero CSD", price: "7.66 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/210987/bolero-exterior-right-front-three-quarter-3.png?isig=0&q=80" },
+            { id: 78, category: "cars", name: "Toyota Fortuner Legender CSD", price: "32.33 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/137767/fortuner-legender-exterior-right-rear-three-quarter.png?isig=0&q=80" },
             { id: 79, category: "cars", name: "Mahindra Scorpio N CSD", price: "12.77 Lakh", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/40432/scorpio-n-exterior-right-front-three-quarter-4.png?isig=0&q=80" },
-
-
 
             // AFD Bikes
             { id: 80, category: "bikes", name: "Royal Enfield Bullet 350", price: "1,04,124,", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/royalenfield-bullet-base1740992337934.jpg?q=80" },
-
-
-
-
             { id: 81, category: "bikes", name: "Royal Enfield Classic 350", price: "1,10274", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--redditch1738919737719.jpg?q=80" },
-
-
-
-
             { id: 82, category: "bikes", name: "Royal Enfield Guerrilla 450", price: "1,97,085", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/royalenfield-guerrilla-450-dash-twilight-blue1774607504468.jpg?q=80" },
-
-
-
             { id: 83, category: "bikes", name: "Royal Enfield Himalayan 450", price: "2,60,278", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/royalenfield-himalayan-base1770645122967.jpg?q=80" },
-
-
             { id: 84, category: "bikes", name: "Honda Activa", price: "70,760", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/honda-activa-6g-standard1782118367235.jpg?q=80" },
-
-
             { id: 85, category: "bikes", name: "Honda Activa 125", price: "135000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--25-year-anniversary-edition1754995553732.jpg?q=80" },
-
-
             { id: 86, category: "bikes", name: "Bajaj Pulsar 220F", price: "90,000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-220f-standard1781771494991.jpg?q=80" },
-
-
             { id: 87, category: "bikes", name: "Bajaj Pulsar N160", price: "93,000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-n160-single-channel-single-seat1782297621684.jpg?q=80" },
-
-
             { id: 88, category: "bikes", name: "Bajaj Pulsar NS200", price: "1,23,905", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-ns-dual-channel-usd1774963088647.jpg?q=80" },
-
-{ id: 88, category: "bikes", name: "Yamaha R15 V4", price: "1,32,545", img: "https://imgd.aeplcdn.com/664x374/n/bw/models/colors/yamaha-select-model-metallic-red-1704802630538.png?q=80" },
-
-
-{ id: 88, category: "bikes", name: "TVS Ronin", price: "1,00,000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/tvs-ronin-ss-single-channel-abs-lightning-black1739873178482.jpg?q=80" },
-
-{ id: 88, category: "bikes", name: "TVS Apache RTR 160", price: "97,987", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/tvs-apache-160-rm-drum-black-edition1732629216165.jpg?q=80" },
-
-{ id: 88, category: "bikes", name: "TVS Apache RR 310", price: "2,45,769", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--red-without-quickshifter-obd-2b1744894903832.jpg?q=80" },
-
-{ id: 88, category: "bikes", name: "TVS Jupiter 125", price: "97,678", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/tvs-jupiter-125-drum-alloy-wheel1781086869768.jpg?q=80" },
-
-{ id: 88, category: "bikes", name: "TVS iQube EV", price: "99,769", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--22-kwh1747293190144.jpg?q=80" },
-
-{ id: 88, category: "bikes", name: "Hero Splendor Plus", price: "78,678", img: "https://imgd.aeplcdn.com/1056x594/n/7eb4kjb_1956482.png?q=80" },
-
-
-{ id: 88, category: "bikes", name: "Hero Karizma XMR", price: "1,10,666", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--top1744051710255.jpg?q=80" },
-
-
-{ id: 88, category: "bikes", name: "Ather Rizta EV", price: "1,03,408", img: "https://imgd.aeplcdn.com/664x374/n/bw/models/colors/ather-select-model-deccan-grey-1712392628151.png?q=80" },
-
-{ id: 88, category: "bikes", name: "Suzuki Access 125", price: "75,644", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/suzuki-access-125-standard1782208080044.jpg?q=80" },
-
-{ id: 88, category: "bikes", name: "Suzuki Burgman Street 125", price: "98,511", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/suzuki-burgman-street-125-ride-connect-edition1775210783860.jpg?q=80" },
-
-
+            { id: 88, category: "bikes", name: "Yamaha R15 V4", price: "1,32,545", img: "https://imgd.aeplcdn.com/664x374/n/bw/models/colors/yamaha-select-model-metallic-red-1704802630538.png?q=80" },
+            { id: 88, category: "bikes", name: "TVS Ronin", price: "1,00,000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/tvs-ronin-ss-single-channel-abs-lightning-black1739873178482.jpg?q=80" },
+            { id: 88, category: "bikes", name: "TVS Apache RTR 160", price: "97,987", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/tvs-apache-160-rm-drum-black-edition1732629216165.jpg?q=80" },
+            { id: 88, category: "bikes", name: "TVS Apache RR 310", price: "2,45,769", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--red-without-quickshifter-obd-2b1744894903832.jpg?q=80" },
+            { id: 88, category: "bikes", name: "TVS Jupiter 125", price: "97,678", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/tvs-jupiter-125-drum-alloy-wheel1781086869768.jpg?q=80" },
+            { id: 88, category: "bikes", name: "TVS iQube EV", price: "99,769", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--22-kwh1747293190144.jpg?q=80" },
+            { id: 88, category: "bikes", name: "Hero Splendor Plus", price: "78,678", img: "https://imgd.aeplcdn.com/1056x594/n/7eb4kjb_1956482.png?q=80" },
+            { id: 88, category: "bikes", name: "Hero Karizma XMR", price: "1,10,666", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/--top1744051710255.jpg?q=80" },
+            { id: 88, category: "bikes", name: "Ather Rizta EV", price: "1,03,408", img: "https://imgd.aeplcdn.com/664x374/n/bw/models/colors/ather-select-model-deccan-grey-1712392628151.png?q=80" },
+            { id: 88, category: "bikes", name: "Suzuki Access 125", price: "75,644", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/suzuki-access-125-standard1782208080044.jpg?q=80" },
+            { id: 88, category: "bikes", name: "Suzuki Burgman Street 125", price: "98,511", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/suzuki-burgman-street-125-ride-connect-edition1775210783860.jpg?q=80" },
             { id: 89, category: "bikes", name: "Bajaj Pulsar 150", price: "99,000", img: "https://imgd.aeplcdn.com/664x374/n/cw/ec/1/versions/bajaj-pulsar-150-single-disc-20261771570201788.jpg?q=80" }
         ];
 
@@ -858,6 +799,18 @@
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = "none";
             if(modalId === 'imageModal') document.getElementById("modalImg").src = "";
+        }
+
+        // नए नोटिफिकेशन फंक्शंस
+        function openNotiList() {
+            document.getElementById("notiListModal").style.display = "flex";
+            // अलर्ट को हटाने के लिए नीचे वाली लाइन हटा सकते हैं अगर क्लिक के बाद बैज गायब करना हो
+            // document.querySelector('.noti-badge').style.display = 'none';
+        }
+
+        function showNotiImage() {
+            document.getElementById("notiListModal").style.display = "none";
+            document.getElementById("notiImageModal").style.display = "flex";
         }
 
         window.onclick = function(event) {
